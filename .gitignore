@@ -1,0 +1,13 @@
+.env
+results/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Generated from samples/pdfs by scripts/prepare_ground_truth.py.
+# Regenerable in one command, and contains the full contract text.
+samples/images/
+samples/ground_truth/
+samples/manifest.json
+
+.omc
