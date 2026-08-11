@@ -67,8 +67,18 @@ def build_feature_table(engine_ids: list[str]) -> list[str]:
 
 def build_document_table(engines: dict[str, Any]) -> list[str]:
     doc_slugs = sorted({slug for s in engines.values() for slug in s["documents"]})
+    # Header shows the Korean document title, not the bare ASCII doc_slug, so
+    # a reader isn't left decoding "gyeongeop"/"bimil_seoyak_jaejik" by hand.
+    titles = {}
+    for slug in doc_slugs:
+        for summary in engines.values():
+            doc = summary["documents"].get(slug)
+            if doc:
+                titles[slug] = doc.get("doc_title", slug)
+                break
+    headers = [f"{titles.get(slug, slug)} ({slug})" for slug in doc_slugs]
     rows = [
-        "| 엔진 구성 | " + " | ".join(doc_slugs) + " |",
+        "| 엔진 구성 | " + " | ".join(headers) + " |",
         "|---|" + "---|" * len(doc_slugs),
     ]
     for summary in engines.values():
@@ -78,6 +88,106 @@ def build_document_table(engines: dict[str, Any]) -> list[str]:
             cells.append(_fmt(doc["similarity_pct"], digits=1) if doc else "-")
         rows.append(f"| {summary['label']} | " + " | ".join(cells) + " |")
     return rows
+
+
+def build_table_summary(table_engines: dict[str, Any]) -> list[str]:
+    rows = [
+        "| 엔진 구성 | id | TEDS 평균 | TEDS(헤더 무시) | 경계분할 제외 TEDS | 표 미검출 | 누락 표 | 채점 페이지 |",
+        "|---|---|---:|---:|---:|---:|---:|---:|",
+    ]
+    for summary in sorted(
+        table_engines.values(),
+        key=lambda s: (s["teds_mean"] is None, -(s["teds_mean"] or 0.0)),
+    ):
+        rows.append(
+            "| {label} | `{eid}` | {teds} | {agnostic} | {normal} | {nopred} | {missing} | {n} |".format(
+                label=summary["label"],
+                eid=summary["engine_config_id"],
+                teds=_fmt(summary["teds_mean"], digits=3),
+                agnostic=_fmt(summary["teds_header_agnostic_mean"], digits=3),
+                normal=_fmt(summary["teds_mean_excluding_known_hard"], digits=3),
+                nopred=f"{summary['pages_with_no_prediction']}/{summary['n_pages']}",
+                missing=summary["missing_tables"],
+                n=summary["n_pages"],
+            )
+        )
+    return rows
+
+
+def build_table_page_matrix(tables: dict[str, Any]) -> list[str]:
+    engine_ids = list(tables["engines"])
+    sample_ids = tables["scored_sample_ids"]
+    known_hard = set(tables["known_hard_sample_ids"])
+
+    by_key = {
+        (page["engine_config_id"], page["sample_id"]): page for page in tables["pages"]
+    }
+    rows = [
+        "| 페이지 | " + " | ".join(engine_ids) + " |",
+        "|---|" + "---:|" * len(engine_ids),
+    ]
+    for sample_id in sample_ids:
+        cells = []
+        for engine_id in engine_ids:
+            page = by_key.get((engine_id, sample_id))
+            if page is None:
+                cells.append("-")
+            elif page["no_prediction"]:
+                cells.append("표 미검출")
+            else:
+                cells.append(_fmt(page["teds"], digits=3))
+        marker = " ※" if sample_id in known_hard else ""
+        rows.append(f"| {sample_id}{marker} | " + " | ".join(cells) + " |")
+    return rows
+
+
+def build_table_section(tables: dict[str, Any]) -> list[str]:
+    if not tables.get("engines"):
+        return []
+
+    known_hard = ", ".join(f"`{s}`" for s in tables["known_hard_sample_ids"])
+    return [
+        "## 7. 표 구조 정확도 (TEDS)",
+        "",
+        "> 6절 R3(표 추출의 구조 보존 가치가 텍스트 채점에 반영되지 않는다)를 보완하는 "
+        "별도 채점입니다. 범위와 대상 엔진이 다르므로 1절 표와 직접 비교하지 마십시오.",
+        "",
+        f"- 대상: 사람이 직접 검수해 정의한 표 정답 {tables['n_ground_truth_pages']}페이지 중 "
+        f"{tables['n_pages']}페이지 채점 (전체 65페이지 텍스트 채점과 범위가 다름)",
+        "- 대상 엔진: 구조화된 표를 반환할 수 있는 구성만. "
+        "`clova_text`는 표 검출을 요청하지 않으므로 채점 대상이 아님",
+        "- 지표: TEDS = 1 - (트리 편집 거리 / max(정답 노드 수, 예측 노드 수)), 0~1. "
+        "PubTabNet·DP-Bench와 같은 계열이며 `rowspan`/`colspan`은 셀의 구조적 정체성에 "
+        "포함됩니다(병합 셀을 여러 칸으로 복제하면 감점).",
+        "",
+        *build_table_summary(tables["engines"]),
+        "",
+        "- **TEDS(헤더 무시)**: `<th>`/`<thead>`를 `<td>`/`<tbody>`로 평탄화한 변형입니다. "
+        "CLOVA General OCR은 머리글 개념 자체가 없는 셀 격자를 반환하므로, 엄격 TEDS만 "
+        "보면 제공하지 않는 기능 때문에 감점된 것처럼 보입니다. 두 값을 함께 읽으십시오.",
+        "- **표 미검출**은 '표를 하나도 반환하지 않은 페이지 수'이고, 낮은 TEDS는 "
+        "'표는 반환했으나 구조가 틀린' 경우입니다. 둘은 다른 문제입니다.",
+        "",
+        "### 7.1 페이지별 TEDS",
+        "",
+        "열 머리글은 위 표의 `id` 열과 같습니다.",
+        "",
+        *build_table_page_matrix(tables),
+        "",
+        f"※ {known_hard}: 하나의 실제 표가 물리적 페이지 경계에서 잘린 **알려진 난해 사례**입니다. "
+        "정답을 각 페이지에 '보이는 그대로' 정의했기 때문에(설계 결정), 한 페이지만 보는 어떤 "
+        "OCR 호출도 완전히 복원할 수 없습니다. 여기의 낮은 점수는 엔진 결함이 아니라 페이지 "
+        "분할 자체의 한계이며, 위 표의 '경계분할 제외 TEDS' 열이 이 두 페이지를 뺀 값입니다.",
+        "",
+        "### 7.2 표 채점의 한계",
+        "",
+        f"- 표본이 {tables['n_pages']}페이지뿐이라 페이지 하나가 평균을 크게 움직입니다. "
+        "서술적으로만 읽으십시오.",
+        "- 표 정답은 사람이 렌더 이미지를 보고 작성한 것이며, 셀 텍스트 표기(띄어쓰기 등)에 "
+        "작성자의 판단이 들어가 있습니다.",
+        "- 텍스트 채점과 마찬가지로 합격 기준선은 없습니다. 수치만 제시합니다.",
+        "",
+    ]
 
 
 def render(aggregated: dict[str, Any], run_note: str = "") -> str:
@@ -209,6 +319,10 @@ def render(aggregated: dict[str, Any], run_note: str = "") -> str:
         "있습니다.",
         "",
     ]
+
+    if aggregated.get("tables"):
+        lines += build_table_section(aggregated["tables"])
+
     return "\n".join(lines)
 
 

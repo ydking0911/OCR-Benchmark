@@ -4,9 +4,15 @@ API shape confirmed 2026-08-11:
   POST https://api.upstage.ai/v1/document-digitization
   Authorization: Bearer <UPSTAGE_API_KEY>
   multipart/form-data: document=<file>, model=document-parse,
-                       mode=standard|enhanced|auto, output_formats=['text']
+                       mode=standard|enhanced|auto, output_formats=['text','html']
   -> {"api", "model", "usage": {"pages": N},
-      "content": {"text", "html", "markdown"}, "elements": [...]}
+      "content": {"text", "html", "markdown"},
+       "elements": [{"category": ..., "content": {"text", "html", ...}}]}
+
+`html` is requested alongside `text` so `elements[].content.html` is populated
+for `category == "table"` elements — that is the only place Document Parse
+exposes table structure, and it was previously discarded. Text extraction is
+unaffected: `content.text` is still what feeds CER/WER.
 """
 
 from __future__ import annotations
@@ -47,6 +53,22 @@ def parse_response(payload: dict[str, Any]) -> tuple[str, dict[str, Any]]:
     return text, usage
 
 
+def extract_table_htmls(payload: dict[str, Any]) -> list[str]:
+    """Collect the `<table>` HTML of every table element, in reading order.
+
+    Kept out of `parse_response` so the text pipeline's contract is unchanged;
+    tables are an additional output, not a different parse.
+    """
+    htmls: list[str] = []
+    for element in payload.get("elements") or []:
+        if (element.get("category") or "").lower() != "table":
+            continue
+        html = (element.get("content") or {}).get("html")
+        if html:
+            htmls.append(html)
+    return htmls
+
+
 class UpstageClient:
     def __init__(self, engine_config_id: str, api_key: str, timeout: int = DEFAULT_TIMEOUT):
         self.engine_config_id = engine_config_id
@@ -66,14 +88,16 @@ class UpstageClient:
                     data={
                         "model": self.cfg["model"],
                         "mode": self.cfg["mode"],
-                        "output_formats": '["text"]',
+                        "output_formats": '["text","html"]',
                     },
                     timeout=self.timeout,
                 )
             result.latency_ms = int((time.monotonic() - started) * 1000)
             result.http_status = response.status_code
             response.raise_for_status()
-            result.raw_text, result.usage_raw = parse_response(response.json())
+            payload = response.json()
+            result.raw_text, result.usage_raw = parse_response(payload)
+            result.table_htmls = extract_table_htmls(payload)
         except Exception as exc:
             result.latency_ms = result.latency_ms or int((time.monotonic() - started) * 1000)
             result.error = f"{type(exc).__name__}: {exc}"

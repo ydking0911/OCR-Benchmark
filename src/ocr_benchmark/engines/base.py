@@ -14,6 +14,10 @@ class EngineResult:
     engine_config_id: str
     sample_id: str
     raw_text: str = ""
+    # Structured `<table>` HTML, one string per detected table, in reading
+    # order. Empty for engines/configs that were not asked for table structure.
+    # Cached entries written before table scoring existed deserialize to [].
+    table_htmls: list[str] = field(default_factory=list)
     usage_raw: dict[str, Any] = field(default_factory=dict)
     cost_usd: float | None = None
     cost_krw: float | None = None

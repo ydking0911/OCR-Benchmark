@@ -9,7 +9,12 @@ Fixtures mirror the real response shapes confirmed 2026-08-11:
 import pytest
 
 from ocr_benchmark import config
-from ocr_benchmark.engines import claude_client, clova_client, upstage_client
+from ocr_benchmark.engines import (
+    claude_client,
+    claude_table_client,
+    clova_client,
+    upstage_client,
+)
 from ocr_benchmark.engines.base import EngineResult, apply_cost
 
 # --- Upstage ---------------------------------------------------------------
@@ -47,6 +52,37 @@ UPSTAGE_RESPONSE = {
 }
 
 
+UPSTAGE_TABLE_HTML = (
+    "<table><thead><tr><th>연번</th><th>기기명</th></tr></thead>"
+    "<tbody><tr><td>1</td><td></td></tr></tbody></table>"
+)
+
+# `output_formats=["text","html"]` populates `elements[].content.html`; table
+# elements are the only place Document Parse exposes table structure.
+UPSTAGE_TABLE_RESPONSE = dict(
+    UPSTAGE_RESPONSE,
+    elements=[
+        *UPSTAGE_RESPONSE["elements"],
+        {
+            "id": 2,
+            "page": 1,
+            "category": "table",
+            "content": {
+                "text": "연번 기기명 1",
+                "html": UPSTAGE_TABLE_HTML,
+                "markdown": "| 연번 | 기기명 |",
+            },
+        },
+        {
+            "id": 3,
+            "page": 1,
+            "category": "figure",
+            "content": {"text": "", "html": "<figure></figure>"},
+        },
+    ],
+)
+
+
 def test_upstage_parses_text_and_usage():
     text, usage = upstage_client.parse_response(UPSTAGE_RESPONSE)
     assert text.startswith("비밀유지계약서")
@@ -82,6 +118,23 @@ def test_upstage_cost_uses_the_tier_price_per_page(engine_config_id, expected):
 def test_upstage_standard_and_enhanced_send_different_modes():
     assert config.ENGINE_CONFIGS["upstage_standard"]["mode"] == "standard"
     assert config.ENGINE_CONFIGS["upstage_enhanced"]["mode"] == "enhanced"
+
+
+def test_upstage_extracts_html_of_table_elements_only():
+    assert upstage_client.extract_table_htmls(UPSTAGE_TABLE_RESPONSE) == [
+        UPSTAGE_TABLE_HTML
+    ]
+
+
+def test_upstage_extracts_nothing_from_a_page_without_tables():
+    assert upstage_client.extract_table_htmls(UPSTAGE_RESPONSE) == []
+
+
+def test_upstage_table_extraction_does_not_change_the_text_pipeline():
+    with_tables, usage = upstage_client.parse_response(UPSTAGE_TABLE_RESPONSE)
+    without, _ = upstage_client.parse_response(UPSTAGE_RESPONSE)
+    assert with_tables == without
+    assert usage["element_count"] == 4
 
 
 # --- CLOVA -----------------------------------------------------------------
@@ -210,6 +263,119 @@ def test_clova_does_not_duplicate_table_text_already_in_fields():
     }
     text, _ = clova_client.parse_response(payload)
     assert text == "항목 금액"
+
+
+def clova_cell(row, column, text, row_span=1, column_span=1):
+    """A V2 `tables[].cells[]` entry.
+
+    Shape per the documented CLOVA OCR V2 schema: rowIndex / columnIndex /
+    rowSpan / columnSpan / cellTextLines[].cellWords[].inferText.
+    """
+    return {
+        "rowIndex": row,
+        "columnIndex": column,
+        "rowSpan": row_span,
+        "columnSpan": column_span,
+        "cellTextLines": [
+            {
+                "cellWords": [{"inferText": word} for word in text.split()],
+                "boundingPoly": {"vertices": [{"x": 0, "y": 0}]},
+            }
+        ]
+        if text
+        else [],
+    }
+
+
+CLOVA_TABLE = {
+    "cells": [
+        clova_cell(0, 0, "지출금액", column_span=2),
+        clova_cell(1, 0, "발의일", row_span=2),
+        clova_cell(1, 1, "2026-08-11"),
+        clova_cell(2, 1, ""),
+    ]
+}
+
+
+def test_clova_tables_to_html_renders_the_cell_grid_with_spans():
+    html = clova_client.clova_tables_to_html([CLOVA_TABLE])
+    assert html == [
+        "<table><tbody>"
+        '<tr><td colspan="2">지출금액</td></tr>'
+        '<tr><td rowspan="2">발의일</td><td>2026-08-11</td></tr>'
+        "<tr><td></td></tr>"
+        "</tbody></table>"
+    ]
+
+
+def test_clova_tables_to_html_orders_cells_by_row_then_column():
+    scrambled = {
+        "cells": [
+            clova_cell(1, 1, "d"),
+            clova_cell(0, 1, "b"),
+            clova_cell(1, 0, "c"),
+            clova_cell(0, 0, "a"),
+        ]
+    }
+    html = clova_client.clova_tables_to_html([scrambled])[0]
+    assert html == (
+        "<table><tbody><tr><td>a</td><td>b</td></tr>"
+        "<tr><td>c</td><td>d</td></tr></tbody></table>"
+    )
+
+
+def test_clova_tables_to_html_escapes_cell_text():
+    cells = {"cells": [clova_cell(0, 0, "a<b>&c")]}
+    assert "&lt;b&gt;" in clova_client.clova_tables_to_html([cells])[0]
+
+
+def test_clova_tables_to_html_accepts_the_normalized_form():
+    normalized = clova_client.normalize_tables([CLOVA_TABLE])
+    assert clova_client.clova_tables_to_html(
+        normalized
+    ) == clova_client.clova_tables_to_html([CLOVA_TABLE])
+
+
+def test_clova_normalized_tables_keep_structure_and_drop_bounding_boxes():
+    normalized = clova_client.normalize_tables([CLOVA_TABLE])
+    assert normalized == [
+        {
+            "cells": [
+                {"rowIndex": 0, "columnIndex": 0, "rowSpan": 1, "columnSpan": 2, "text": "지출금액"},
+                {"rowIndex": 1, "columnIndex": 0, "rowSpan": 2, "columnSpan": 1, "text": "발의일"},
+                {"rowIndex": 1, "columnIndex": 1, "rowSpan": 1, "columnSpan": 1, "text": "2026-08-11"},
+                {"rowIndex": 2, "columnIndex": 1, "rowSpan": 1, "columnSpan": 1, "text": ""},
+            ]
+        }
+    ]
+
+
+def test_clova_missing_spans_default_to_one():
+    bare = {"cells": [{"rowIndex": 0, "columnIndex": 0, "cellTextLines": []}]}
+    assert clova_client.normalize_tables([bare])[0]["cells"][0]["rowSpan"] == 1
+    assert clova_client.clova_tables_to_html([bare]) == [
+        "<table><tbody><tr><td></td></tr></tbody></table>"
+    ]
+
+
+def test_clova_parse_response_persists_the_table_structure_in_usage():
+    payload = {
+        "images": [
+            {
+                "inferResult": "SUCCESS",
+                "fields": [field("지출결의서", True, 100, 100)],
+                "tables": [CLOVA_TABLE],
+            }
+        ]
+    }
+    _, usage = clova_client.parse_response(payload)
+    assert usage["table_count"] == 1
+    assert usage["tables_normalized"][0]["cells"][0]["columnSpan"] == 2
+
+
+def test_clova_extract_table_htmls_is_empty_without_table_detection():
+    assert clova_client.extract_table_htmls(CLOVA_RESPONSE) == []
+    assert clova_client.extract_table_htmls({"images": []}) == []
 
 
 def test_clova_failure_result_raises_so_the_caller_records_an_error():
@@ -526,3 +692,129 @@ def test_successful_clova_transcribe_parses_the_fixture(monkeypatch, tmp_path):
     assert result.raw_text == "비밀유지 계약서\n제1조(목적)"
     assert captured["headers"]["X-OCR-SECRET"] == "secret"
     assert captured["url"] == "https://example/general"
+
+
+# --- table structure end-to-end (still fixture-only, no network) -----------
+
+
+def test_upstage_requests_html_alongside_text_and_fills_table_htmls(monkeypatch, tmp_path):
+    class Response:
+        status_code = 200
+
+        def raise_for_status(self):
+            return None
+
+        def json(self):
+            return UPSTAGE_TABLE_RESPONSE
+
+    captured = {}
+
+    def post(url, **kwargs):
+        captured.update(url=url, **kwargs)
+        return Response()
+
+    monkeypatch.setattr(upstage_client.requests, "post", post)
+    client = upstage_client.UpstageClient("upstage_standard", "key")
+    result = client.transcribe(make_image(tmp_path), "franchise_p47")
+
+    assert captured["data"]["output_formats"] == '["text","html"]'
+    assert result.table_htmls == [UPSTAGE_TABLE_HTML]
+    assert "비밀유지계약서" in result.raw_text
+
+
+def test_clova_transcribe_fills_table_htmls_from_the_tables_array(monkeypatch, tmp_path):
+    class Response:
+        status_code = 200
+
+        def raise_for_status(self):
+            return None
+
+        def json(self):
+            return {
+                "images": [
+                    {
+                        "inferResult": "SUCCESS",
+                        "fields": [field("지출결의서", True, 10, 10)],
+                        "tables": [CLOVA_TABLE],
+                    }
+                ]
+            }
+
+    monkeypatch.setattr(clova_client.requests, "post", lambda *a, **k: Response())
+    client = clova_client.ClovaClient("clova_table", "secret", "https://example/general")
+    result = client.transcribe(make_image(tmp_path), "jichul_p01")
+
+    assert result.ok
+    assert result.table_htmls == clova_client.clova_tables_to_html([CLOVA_TABLE])
+
+
+def test_engine_result_round_trips_table_htmls_through_the_cache_format():
+    original = EngineResult(
+        engine_config_id="upstage_standard",
+        sample_id="franchise_p47",
+        table_htmls=[UPSTAGE_TABLE_HTML],
+    )
+    assert EngineResult.from_dict(original.to_dict()).table_htmls == [UPSTAGE_TABLE_HTML]
+
+
+def test_a_cache_entry_written_before_table_scoring_still_loads():
+    legacy = {
+        "engine_config_id": "upstage_standard",
+        "sample_id": "franchise_p47",
+        "raw_text": "x",
+        "usage_raw": {"pages": 1},
+    }
+    assert EngineResult.from_dict(legacy).table_htmls == []
+
+
+def test_claude_table_client_sends_the_table_prompt_and_parses_html(tmp_path):
+    reply = f"```html\n{UPSTAGE_TABLE_HTML}\n```"
+    fake = FakeAnthropic(Message([Block("text", text=reply)]))
+    client = claude_table_client.ClaudeTableClient(
+        config.CLAUDE_TABLE_ENGINE_CONFIG_ID, "key", client=fake
+    )
+
+    result = client.transcribe(make_image(tmp_path), "franchise_p47")
+
+    assert result.ok
+    assert result.table_htmls == [UPSTAGE_TABLE_HTML]
+    assert result.cost_usd > 0
+
+    sent = fake.messages.captured
+    assert sent["model"] == config.CLAUDE_MODEL
+    assert sent["max_tokens"] == config.CLAUDE_MAX_TOKENS
+    assert sent["output_config"] == {"effort": config.CLAUDE_EFFORT}
+    _, text_block = sent["messages"][0]["content"]
+    assert text_block["text"] == config.CLAUDE_TABLE_PROMPT
+    assert text_block["text"] != config.CLAUDE_PROMPT
+
+
+def test_claude_table_client_treats_no_table_found_as_a_valid_empty_answer(tmp_path):
+    fake = FakeAnthropic(Message([Block("text", text="")]))
+    client = claude_table_client.ClaudeTableClient(client=fake)
+    result = client.transcribe(make_image(tmp_path), "gyeongeop_p01")
+
+    assert result.ok
+    assert result.table_htmls == []
+
+
+def test_claude_table_client_records_a_refusal_as_an_error(tmp_path):
+    fake = FakeAnthropic(Message([Block("text", text="")], stop_reason="refusal"))
+    client = claude_table_client.ClaudeTableClient(client=fake)
+    result = client.transcribe(make_image(tmp_path), "franchise_p47")
+    assert not result.ok
+    assert "refusal" in result.error
+
+
+def test_claude_table_config_is_kept_out_of_the_text_benchmark_registry():
+    # A sixth entry in ENGINE_CONFIGS would add 65 billed calls to every run.
+    assert config.CLAUDE_TABLE_ENGINE_CONFIG_ID not in config.ENGINE_CONFIGS
+    assert config.engine_config(config.CLAUDE_TABLE_ENGINE_CONFIG_ID)["engine"] == "claude"
+    assert config.compute_cost(
+        config.CLAUDE_TABLE_ENGINE_CONFIG_ID, {"input_tokens": 1_000_000}
+    )["cost_usd"] == pytest.approx(config.CLAUDE_PRICING["claude-sonnet-5"]["input"])
+
+
+def test_clova_text_is_not_table_capable():
+    assert "clova_text" not in config.TABLE_CAPABLE_ENGINE_CONFIGS
+    assert "clova_table" in config.TABLE_CAPABLE_ENGINE_CONFIGS

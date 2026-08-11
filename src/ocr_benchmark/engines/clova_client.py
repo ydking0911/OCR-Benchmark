@@ -21,6 +21,7 @@ from __future__ import annotations
 import base64
 import time
 import uuid
+from html import escape
 from pathlib import Path
 from typing import Any
 
@@ -71,21 +72,91 @@ def reassemble_fields(fields: list[dict[str, Any]]) -> str:
     return " ".join(f.get("inferText") or "" for f in ordered).strip()
 
 
+def _cell_text(cell: dict[str, Any]) -> str:
+    words = []
+    for line in cell.get("cellTextLines") or []:
+        for word in line.get("cellWords") or []:
+            if word.get("inferText"):
+                words.append(word["inferText"])
+    return " ".join(words)
+
+
+def normalize_tables(tables: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Reduce the `tables` array to the fields table scoring needs.
+
+    The raw array carries a boundingPoly per word, which would bloat every
+    cached page for no scoring benefit. Grid position, spans and text are kept
+    so the HTML can be regenerated later without re-paying for the call.
+    """
+    normalized = []
+    for table in tables:
+        cells = []
+        for cell in table.get("cells") or []:
+            cells.append(
+                {
+                    "rowIndex": int(cell.get("rowIndex", 0) or 0),
+                    "columnIndex": int(cell.get("columnIndex", 0) or 0),
+                    "rowSpan": max(1, int(cell.get("rowSpan", 1) or 1)),
+                    "columnSpan": max(1, int(cell.get("columnSpan", 1) or 1)),
+                    "text": _cell_text(cell),
+                }
+            )
+        normalized.append({"cells": cells})
+    return normalized
+
+
+def clova_tables_to_html(tables: list[dict[str, Any]]) -> list[str]:
+    """Render CLOVA's cell grid as `<table>` HTML for TEDS comparison.
+
+    General OCR returns a flat grid with no header concept, so every cell
+    becomes a `<td>` inside a single `<tbody>` — CLOVA cannot express `<th>` /
+    `<thead>` and must not be scored as if it had tried and failed. The
+    header-agnostic TEDS variant is what makes that comparison fair.
+
+    Accepts either the raw `tables` array or the output of `normalize_tables`.
+    """
+    htmls = []
+    for table in tables:
+        by_row: dict[int, list[tuple[int, dict[str, Any]]]] = {}
+        for cell in table.get("cells") or []:
+            text = cell["text"] if "text" in cell else _cell_text(cell)
+            by_row.setdefault(int(cell.get("rowIndex", 0) or 0), []).append(
+                (
+                    int(cell.get("columnIndex", 0) or 0),
+                    {
+                        "text": text,
+                        "rowspan": max(1, int(cell.get("rowSpan", 1) or 1)),
+                        "colspan": max(1, int(cell.get("columnSpan", 1) or 1)),
+                    },
+                )
+            )
+
+        rows = []
+        for row_index in sorted(by_row):
+            cells = []
+            for _, cell in sorted(by_row[row_index], key=lambda item: item[0]):
+                attrs = ""
+                if cell["rowspan"] > 1:
+                    attrs += f" rowspan=\"{cell['rowspan']}\""
+                if cell["colspan"] > 1:
+                    attrs += f" colspan=\"{cell['colspan']}\""
+                cells.append(f"<td{attrs}>{escape(cell['text'])}</td>")
+            rows.append("<tr>" + "".join(cells) + "</tr>")
+        htmls.append("<table><tbody>" + "".join(rows) + "</tbody></table>")
+    return htmls
+
+
 def _table_texts(tables: list[dict[str, Any]]) -> list[str]:
     """Flatten table cell text, row by row."""
     rows: list[str] = []
     for table in tables:
         by_row: dict[int, list[tuple[int, str]]] = {}
         for cell in table.get("cells") or []:
-            words = []
-            for line in cell.get("cellTextLines") or []:
-                for word in line.get("cellWords") or []:
-                    if word.get("inferText"):
-                        words.append(word["inferText"])
-            if not words:
+            text = _cell_text(cell)
+            if not text:
                 continue
             by_row.setdefault(cell.get("rowIndex", 0), []).append(
-                (cell.get("columnIndex", 0), " ".join(words))
+                (cell.get("columnIndex", 0), text)
             )
         for row_index in sorted(by_row):
             cells = [text for _, text in sorted(by_row[row_index])]
@@ -125,8 +196,18 @@ def parse_response(payload: dict[str, Any]) -> tuple[str, dict[str, Any]]:
         "table_count": len(tables),
         "infer_result": infer_result,
         "uid": image.get("uid"),
+        # Kept so the HTML rendering can be corrected and re-derived later
+        # without re-paying for the call. `table_htmls` is the derived form.
+        "tables_normalized": normalize_tables(tables),
     }
     return text, usage
+
+
+def extract_table_htmls(payload: dict[str, Any]) -> list[str]:
+    images = payload.get("images") or []
+    if not images:
+        return []
+    return clova_tables_to_html(images[0].get("tables") or [])
 
 
 class ClovaClient:
@@ -170,7 +251,9 @@ class ClovaClient:
             result.latency_ms = int((time.monotonic() - started) * 1000)
             result.http_status = response.status_code
             response.raise_for_status()
-            result.raw_text, result.usage_raw = parse_response(response.json())
+            payload = response.json()
+            result.raw_text, result.usage_raw = parse_response(payload)
+            result.table_htmls = extract_table_htmls(payload)
         except Exception as exc:
             result.latency_ms = result.latency_ms or int((time.monotonic() - started) * 1000)
             result.error = f"{type(exc).__name__}: {exc}"

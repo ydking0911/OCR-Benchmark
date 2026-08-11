@@ -3,4 +3,5 @@ PyMuPDF>=1.24.0
 jiwer>=3.0.0
 python-dotenv>=1.0.0
 requests>=2.31.0
+apted>=1.0.3
 pytest>=8.0.0

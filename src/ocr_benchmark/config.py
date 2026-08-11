@@ -187,6 +187,54 @@ ENGINE_CONFIGS: dict[str, dict[str, Any]] = {
 
 ENGINE_FAMILIES = {"upstage", "clova", "claude"}
 
+# --- Table-structure (TEDS) scoring ----------------------------------------
+
+# Claude has no structured-table output, so table scoring needs a second,
+# separately billed call with its own prompt. It is deliberately kept out of
+# ENGINE_CONFIGS: that dict drives the 65-page text benchmark, and adding a
+# sixth entry would silently add 65 calls to every full run.
+CLAUDE_TABLE_ENGINE_CONFIG_ID = "claude_sonnet_table"
+
+CLAUDE_TABLE_PROMPT = (
+    "이 페이지 이미지에 있는 표를 HTML로만 출력하라.\n"
+    "규칙:\n"
+    "1. 표마다 <table>...</table> 하나씩, 페이지에 보이는 순서대로 출력한다.\n"
+    "2. 사용할 태그는 <table>, <thead>, <tbody>, <tr>, <th>, <td> 뿐이다. "
+    "머리글 행의 셀은 <th>, 나머지는 <td>로 쓴다.\n"
+    "3. 병합된 셀은 rowspan / colspan 속성으로 표현한다. "
+    "병합된 셀의 내용은 한 번만 쓰고, 다른 칸에 복제하지 않는다.\n"
+    "4. 빈 칸도 <td></td>로 반드시 자리를 채운다. 칸을 생략하지 않는다.\n"
+    "5. 셀 안의 텍스트는 보이는 그대로 옮긴다. 요약·해석·번역하지 않는다.\n"
+    "6. 표 밖의 본문, 제목, 머리말, 설명, 마크다운 코드펜스(```)는 출력하지 않는다.\n"
+    "7. 페이지에 표가 하나도 없으면 아무것도 출력하지 않는다.\n"
+    "8. style, class, width 등 서식 속성은 쓰지 않는다."
+)
+
+TABLE_ONLY_ENGINE_CONFIGS: dict[str, dict[str, Any]] = {
+    CLAUDE_TABLE_ENGINE_CONFIG_ID: {
+        "engine": "claude",
+        "label": "Claude Sonnet 5 (표 구조 추출 전용 호출)",
+        "model": CLAUDE_MODEL,
+        "currency": "USD",
+    },
+}
+
+# Configs that can return table structure at all. `clova_text` is excluded
+# because it never requests table detection, so it has nothing to score.
+TABLE_CAPABLE_ENGINE_CONFIGS: tuple[str, ...] = (
+    "upstage_standard",
+    "upstage_enhanced",
+    "clova_table",
+    CLAUDE_TABLE_ENGINE_CONFIG_ID,
+)
+
+
+def engine_config(engine_config_id: str) -> dict[str, Any]:
+    """Look up an engine config from either registry."""
+    if engine_config_id in ENGINE_CONFIGS:
+        return ENGINE_CONFIGS[engine_config_id]
+    return TABLE_ONLY_ENGINE_CONFIGS[engine_config_id]
+
 # --- Static feature checklist (declared capability, not measured) ----------
 
 FEATURE_CHECKLIST: dict[str, dict[str, str]] = {
@@ -206,7 +254,7 @@ def compute_cost(engine_config_id: str, usage_raw: dict[str, Any] | None) -> dic
     fields are None in that case so nothing downstream can mistake an estimate
     for a measurement.
     """
-    cfg = ENGINE_CONFIGS[engine_config_id]
+    cfg = engine_config(engine_config_id)
     engine = cfg["engine"]
     usage = usage_raw or {}
 

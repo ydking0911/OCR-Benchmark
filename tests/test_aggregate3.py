@@ -2,6 +2,7 @@ import pytest
 
 from ocr_benchmark import aggregate3, config
 from ocr_benchmark.engines.base import EngineResult
+from ocr_benchmark.table_ground_truth import TABLE_GROUND_TRUTH
 
 REFERENCE = "제1조(목적) 본 계약은 비밀정보의 보호를 목적으로 한다."
 
@@ -202,3 +203,158 @@ def test_pricing_provenance_reflects_unconfirmed_when_price_is_unknown(corpus, m
     entries, _ = corpus
     pricing = aggregate(make_results("upstage_standard", entries), corpus)["pricing"]
     assert pricing["clova"]["krw_per_request"] is None
+
+
+# --- table structure (TEDS) aggregation ------------------------------------
+
+
+def table_result(engine, sample_id, htmls=None, **kwargs):
+    return EngineResult(
+        engine_config_id=engine,
+        sample_id=sample_id,
+        table_htmls=TABLE_GROUND_TRUTH[sample_id] if htmls is None else htmls,
+        usage_raw={"pages": 1} if engine.startswith("upstage") else {"requests": 1},
+        **kwargs,
+    )
+
+
+def perfect_table_results(engine):
+    return [table_result(engine, sid) for sid in TABLE_GROUND_TRUTH]
+
+
+def test_text_only_aggregation_has_no_table_section(corpus):
+    """A run that never did table extraction reports exactly what it always did."""
+    entries, gt_dir = corpus
+    results = make_results("upstage_standard", entries)
+    assert "tables" not in aggregate(results, corpus)
+    assert "tables" not in aggregate3.aggregate(results, entries, gt_dir, [])
+
+
+def test_perfect_table_extraction_scores_one(corpus):
+    entries, gt_dir = corpus
+    out = aggregate3.aggregate(
+        make_results("upstage_standard", entries),
+        entries,
+        gt_dir,
+        perfect_table_results("upstage_standard"),
+    )
+    summary = out["tables"]["engines"]["upstage_standard"]
+    assert summary["teds_mean"] == 1.0
+    assert summary["n_pages"] == len(TABLE_GROUND_TRUTH)
+    assert summary["pages_with_no_prediction"] == 0
+    assert summary["missing_tables"] == 0
+
+
+def test_a_page_without_table_ground_truth_never_appears(corpus):
+    entries, gt_dir = corpus
+    results = perfect_table_results("upstage_standard")
+    results.append(
+        EngineResult(
+            engine_config_id="upstage_standard",
+            sample_id="gyeongeop_p01",  # confirmed to have no table
+            table_htmls=["<table><tr><td>환각</td></tr></table>"],
+            usage_raw={"pages": 1},
+        )
+    )
+    tables = aggregate3.aggregate(
+        make_results("upstage_standard", entries), entries, gt_dir, results
+    )["tables"]
+
+    assert "gyeongeop_p01" not in tables["scored_sample_ids"]
+    assert set(tables["scored_sample_ids"]) == set(TABLE_GROUND_TRUTH)
+    assert all(p["sample_id"] in TABLE_GROUND_TRUTH for p in tables["pages"])
+
+
+def test_engines_that_cannot_return_table_structure_are_excluded(corpus):
+    entries, gt_dir = corpus
+    results = perfect_table_results("upstage_standard") + perfect_table_results("clova_text")
+    engines = aggregate3.aggregate(
+        make_results("upstage_standard", entries), entries, gt_dir, results
+    )["tables"]["engines"]
+
+    assert "clova_text" not in engines
+    assert "upstage_standard" in engines
+
+
+def test_an_engine_returning_no_table_is_distinguished_from_a_wrong_one(corpus):
+    entries, gt_dir = corpus
+    silent = [table_result("clova_table", sid, htmls=[]) for sid in TABLE_GROUND_TRUTH]
+    wrong = [
+        table_result("upstage_standard", sid, htmls=["<table><tr><td>x</td></tr></table>"])
+        for sid in TABLE_GROUND_TRUTH
+    ]
+    engines = aggregate3.aggregate(
+        make_results("upstage_standard", entries), entries, gt_dir, silent + wrong
+    )["tables"]["engines"]
+
+    assert engines["clova_table"]["pages_with_no_prediction"] == len(TABLE_GROUND_TRUTH)
+    assert engines["clova_table"]["teds_mean"] == 0.0
+    assert engines["upstage_standard"]["pages_with_no_prediction"] == 0
+    assert 0.0 < engines["upstage_standard"]["teds_mean"] < 1.0
+
+
+def test_failed_table_calls_are_floor_scored_not_dropped(corpus):
+    entries, gt_dir = corpus
+    results = perfect_table_results("upstage_standard")
+    results[0].error = "HTTPError: 500"
+    results[0].table_htmls = []
+
+    summary = aggregate3.aggregate(
+        make_results("upstage_standard", entries), entries, gt_dir, results
+    )["tables"]["engines"]["upstage_standard"]
+
+    assert summary["failures"] == 1
+    assert summary["n_pages"] == len(TABLE_GROUND_TRUTH)
+    assert summary["teds_mean"] < 1.0
+
+
+def test_the_page_split_pair_is_reported_separately_from_the_headline_mean(corpus):
+    entries, gt_dir = corpus
+    results = []
+    for sid in TABLE_GROUND_TRUTH:
+        # Every page perfect except the known-hard page-boundary pair.
+        htmls = [] if sid in aggregate3.KNOWN_HARD_TABLE_SAMPLE_IDS else None
+        results.append(table_result("upstage_standard", sid, htmls=htmls))
+
+    tables = aggregate3.aggregate(
+        make_results("upstage_standard", entries), entries, gt_dir, results
+    )["tables"]
+    summary = tables["engines"]["upstage_standard"]
+
+    assert tables["known_hard_sample_ids"] == ["franchise_p12", "franchise_p13"]
+    assert summary["teds_mean"] < 1.0
+    assert summary["teds_mean_excluding_known_hard"] == 1.0
+    assert summary["n_pages_excluding_known_hard"] == len(TABLE_GROUND_TRUTH) - 2
+
+
+def test_header_agnostic_scoring_does_not_penalize_a_bare_cell_grid(corpus):
+    entries, gt_dir = corpus
+    sid = "franchise_p47"
+    grid = [
+        TABLE_GROUND_TRUTH[sid][0]
+        .replace("<thead>", "<tbody>")
+        .replace("</thead>", "</tbody>")
+        .replace("<th>", "<td>")
+        .replace("</th>", "</td>")
+    ]
+    result = table_result("clova_table", sid, htmls=grid)
+
+    summary = aggregate3.aggregate(
+        make_results("upstage_standard", entries), entries, gt_dir, [result]
+    )["tables"]["engines"]["clova_table"]
+
+    assert summary["teds_mean"] < 1.0
+    assert summary["teds_header_agnostic_mean"] == 1.0
+
+
+def test_table_aggregation_computes_no_gate_or_pass_rate(corpus):
+    entries, gt_dir = corpus
+    out = aggregate3.aggregate(
+        make_results("upstage_standard", entries),
+        entries,
+        gt_dir,
+        perfect_table_results("upstage_standard"),
+    )
+    serialized = repr(out["tables"])
+    for forbidden in ("pass_rate", "quality_gate", "threshold", "rank"):
+        assert forbidden not in serialized
