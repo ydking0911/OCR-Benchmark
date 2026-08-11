@@ -1,0 +1,21 @@
+{
+  "fingerprint": "4d7e9d34c72c86a182d53f6063ac1a8eaa70f0c637a8953ca9ee5d4b7b580b02",
+  "image_sha256": "e09dc99d651829cf1888fce1c76d1a27287345c7fd06a69663b19465f51db135",
+  "result": {
+    "engine_config_id": "upstage_enhanced",
+    "sample_id": "eopmu_p02",
+    "raw_text": "(체결권자)\n( 서 명 )\nA(체결기관)\nB(상대기관)\n(체결권자)\n( 서 명 )",
+    "usage_raw": {
+      "pages": 1,
+      "model": "document-parse-260630",
+      "api": "2.0",
+      "element_count": 4
+    },
+    "cost_usd": 0.03,
+    "cost_krw": 41.4,
+    "cost_confirmed": true,
+    "latency_ms": 2313,
+    "http_status": 200,
+    "error": null
+  }
+}

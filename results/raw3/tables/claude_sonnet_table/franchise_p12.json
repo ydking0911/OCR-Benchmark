@@ -1,0 +1,27 @@
+{
+  "fingerprint": "0fd98a691b521f12fa9a6c605c8563b37b9cc801927ea58754390cbc44ed9ce3",
+  "image_sha256": "6007925f832418bae60a4e6b3fa2702fbc05af8b3dfe057e0aba7930e41b8bbe",
+  "result": {
+    "engine_config_id": "claude_sonnet_table",
+    "sample_id": "franchise_p12",
+    "raw_text": "```html\n<table>\n<thead>\n<tr>\n<th>최초가맹금 내역</th>\n<th>금액<br>(단위: 천원)</th>\n<th>포함내역</th>\n<th>지급 기한</th>\n<th>반환 조건</th>\n<th>반환될 수 없는 사유</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>가입비</td>\n<td></td>\n<td>(예시)<br>장소선정 지원비,<br>가맹사업운영</td>\n<td></td>\n<td></td>\n<td></td>\n</tr>\n</tbody>\n</table>\n```",
+    "table_htmls": [
+      "<table>\n<thead>\n<tr>\n<th>최초가맹금 내역</th>\n<th>금액<br>(단위: 천원)</th>\n<th>포함내역</th>\n<th>지급 기한</th>\n<th>반환 조건</th>\n<th>반환될 수 없는 사유</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>가입비</td>\n<td></td>\n<td>(예시)<br>장소선정 지원비,<br>가맹사업운영</td>\n<td></td>\n<td></td>\n<td></td>\n</tr>\n</tbody>\n</table>"
+    ],
+    "usage_raw": {
+      "input_tokens": 5190,
+      "output_tokens": 212,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "stop_reason": "end_turn",
+      "model": "claude-sonnet-5",
+      "max_tokens": 32000
+    },
+    "cost_usd": 0.0125,
+    "cost_krw": 17.25,
+    "cost_confirmed": true,
+    "latency_ms": 4875,
+    "http_status": 200,
+    "error": null
+  }
+}

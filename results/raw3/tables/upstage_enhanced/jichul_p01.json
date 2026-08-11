@@ -1,0 +1,25 @@
+{
+  "fingerprint": "f1671bd17f0d30a76fe10b3d3642c6930bc33ea26bac6d0f2cd1b2b8c3d71802",
+  "image_sha256": "8a52a720c968943cba27e36dd140dce4c2ecfc755a46333711dd1f0ee65f0dc9",
+  "result": {
+    "engine_config_id": "upstage_enhanced",
+    "sample_id": "jichul_p01",
+    "raw_text": "지 출 결 의 서\n| 문서번호 | 문서번호 | 결 재 | 담당 | 팀장 | 센터장 |\n| --- | --- | --- | --- | --- | --- |\n| 제 호 | 제 호 | 결 재 |  |  |  |\n| 지출금액 일금 원정(\\ ) | 지출금액 일금 원정(\\ ) | 지출금액 일금 원정(\\ ) | 지출금액 일금 원정(\\ ) | 지출금액 일금 원정(\\ ) | 지출금액 일금 원정(\\ ) |\n| 발의일 |  | (인) | 지출예산항목 | 지출예산항목 | 지출예산항목 |\n|  |  |  | 단위사업 |  |  |\n| 예산항목 |  |  |  |  |  |\n| (인) 내 역 | (인) 내 역 | (인) 내 역 | (인) 내 역 | (인) 내 역 | (인) 내 역 |\n| 적요 | 적요 | 적요 | 적요 | 적요 | 적요 |\n| <table border=\"1\"><thead><tr><th scope=\"col\">금액</th></tr></thead><tbody><tr><td>원</td></tr></tbody></table> | <table border=\"1\"><thead><tr><th scope=\"col\">금액</th></tr></thead><tbody><tr><td>원</td></tr></tbody></table> | <table border=\"1\"><thead><tr><th scope=\"col\">금액</th></tr></thead><tbody><tr><td>원</td></tr></tbody></table> | <table border=\"1\"><thead><tr><th scope=\"col\">금액</th></tr></thead><tbody><tr><td>원</td></tr></tbody></table> | <table border=\"1\"><thead><tr><th scope=\"col\">금액</th></tr></thead><tbody><tr><td>원</td></tr></tbody></table> | <table border=\"1\"><thead><tr><th scope=\"col\">금액</th></tr></thead><tbody><tr><td>원</td></tr></tbody></table> |\n\n| 지출처 |  | 지출방 법 |  | 은행명 |  |\n| --- | --- | --- | --- | --- | --- |\n| 지출처 | 예금주 | 지출방 법 |  |  |  |\n| 지출처 | 계좌번호 | 지출방 법 |  |  |  |\n| 영수 | 상기금액을 영수함 년 월 일 영수인 (인) | 상기금액을 영수함 년 월 일 영수인 (인) | 상기금액을 영수함 년 월 일 영수인 (인) | 상기금액을 영수함 년 월 일 영수인 (인) |  |",
+    "table_htmls": [
+      "<table id='1' style='font-size:14px'><thead><tr><th colspan=\"2\" scope=\"colgroup\">문서번호</th><th rowspan=\"2\" scope=\"col\">결 재</th><th scope=\"col\">담당</th><th scope=\"col\">팀장</th><th scope=\"col\">센터장</th></tr></thead><tbody><tr><th colspan=\"2\" scope=\"row\">제 호</th><td></td><td></td><td></td></tr><tr><td colspan=\"6\">지출금액 일금 원정(\\ )</td></tr><tr><th scope=\"row\">발의일</th><td></td><th scope=\"row\">(인)</th><th colspan=\"3\" scope=\"colgroup\">지출예산항목</th></tr><tr><td rowspan=\"2\"></td><td rowspan=\"2\"></td><td rowspan=\"2\"></td><th scope=\"col\">단위사업</th><td colspan=\"2\"></td></tr><tr><th scope=\"row\">예산항목</th><td colspan=\"2\"></td></tr><tr><td colspan=\"6\">(인) 내 역</td></tr><tr><th colspan=\"6\" scope=\"colgroup\">적요</th></tr><tr><td colspan=\"6\"><table border=\"1\"><thead><tr><th scope=\"col\">금액</th></tr></thead><tbody><tr><td>원</td></tr></tbody></table></td></tr></tbody></table>",
+      "<br><table id='2' style='font-size:14px'><tbody><tr><th scope=\"rowgroup\" rowspan=\"3\">지출처</th><td rowspan=\"3\"></td><td rowspan=\"3\">지출방 법</td><td rowspan=\"3\"></td><th scope=\"row\">은행명</th><td></td></tr><tr><th scope=\"row\">예금주</th><td></td></tr><tr><th scope=\"row\">계좌번호</th><td></td></tr><tr><th scope=\"row\">영수</th><td colspan=\"4\">상기금액을 영수함 년 월 일 영수인 (인)</td></tr></tbody></table>"
+    ],
+    "usage_raw": {
+      "pages": 1,
+      "model": "document-parse-260630",
+      "api": "2.0",
+      "element_count": 3
+    },
+    "cost_usd": 0.03,
+    "cost_krw": 41.4,
+    "cost_confirmed": true,
+    "latency_ms": 3375,
+    "http_status": 200,
+    "error": null
+  }
+}

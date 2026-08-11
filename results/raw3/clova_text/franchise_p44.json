@@ -1,0 +1,22 @@
+{
+  "fingerprint": "f4b36f9b87ee8a47b9ed53a5a2c025ac23092066fdbf036cbb607761e535d630",
+  "image_sha256": "46008d2f2445bcc6d27b1d82415278f3c77992bcd1063e4079b67f4e50616c7e",
+  "result": {
+    "engine_config_id": "clova_text",
+    "sample_id": "franchise_p44",
+    "raw_text": "사업자등록번호:\n상호:\n주소:\n연락처:\n[가맹점사업자]\n(인)\n성명:\n생 년 월 일:\n점 포 명:\n주소:\n연 락 처:\n본인은 본 페이지의 내용에 대한 설명을\n듣고, 이를 완전히 이해하였음\n(인)",
+    "usage_raw": {
+      "requests": 1,
+      "field_count": 29,
+      "table_count": 0,
+      "infer_result": "SUCCESS",
+      "uid": "d483f09a71454c33b57662bd8aa39572"
+    },
+    "cost_usd": null,
+    "cost_krw": null,
+    "cost_confirmed": false,
+    "latency_ms": 2030,
+    "http_status": 200,
+    "error": null
+  }
+}

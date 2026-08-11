@@ -1,0 +1,27 @@
+{
+  "fingerprint": "41c204a9d66b97ca5c096d96f132c1bac17674deed577909121c10dab601d485",
+  "image_sha256": "c87e9046174a5dad84622b464ba46fafbead877aa020815df0c98f75d2f53af4",
+  "result": {
+    "engine_config_id": "claude_sonnet_table",
+    "sample_id": "franchise_p01",
+    "raw_text": "<table>\n<tr>\n<td>본인은 본 페이지의 내용에 대한 설명을 듣고, 이를완전히이해하였음</td>\n<td>(인)</td>\n</tr>\n</table>",
+    "table_htmls": [
+      "<table>\n<tr>\n<td>본인은 본 페이지의 내용에 대한 설명을 듣고, 이를완전히이해하였음</td>\n<td>(인)</td>\n</tr>\n</table>"
+    ],
+    "usage_raw": {
+      "input_tokens": 5190,
+      "output_tokens": 73,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "stop_reason": "end_turn",
+      "model": "claude-sonnet-5",
+      "max_tokens": 32000
+    },
+    "cost_usd": 0.01111,
+    "cost_krw": 15.3318,
+    "cost_confirmed": true,
+    "latency_ms": 3061,
+    "http_status": 200,
+    "error": null
+  }
+}

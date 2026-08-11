@@ -1,0 +1,24 @@
+{
+  "fingerprint": "7d113f24af3d9bd54dc52f52d59f601a3e1c9f82e83fac0e436ec73b58db22bb",
+  "image_sha256": "46008d2f2445bcc6d27b1d82415278f3c77992bcd1063e4079b67f4e50616c7e",
+  "result": {
+    "engine_config_id": "claude_sonnet",
+    "sample_id": "franchise_p44",
+    "raw_text": "사업자등록번호:\n\n상        호:                                              본인은 본 페이지의 내용에 대한 설명을\n\n주        소:                                              듣고, 이를완전히 이해하였음                       (인)\n\n연  락  처:\n\n\n[가맹점사업자]\n\n\n성          명:                    (인)\n\n생 년 월 일:\n\n점    포    명:\n\n주        소:\n\n연  락  처:\n\n사업자등록번호:\n\n상        호:\n\n주        소:                                    본인은 본 페이지의 내용에 대한 설명을\n                                                      듣고, 이를완전히 이해하였음                       (인)\n\n연  락  처:",
+    "usage_raw": {
+      "input_tokens": 4882,
+      "output_tokens": 199,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "stop_reason": "end_turn",
+      "model": "claude-sonnet-5",
+      "max_tokens": 32000
+    },
+    "cost_usd": 0.011754,
+    "cost_krw": 16.22052,
+    "cost_confirmed": true,
+    "latency_ms": 5811,
+    "http_status": 200,
+    "error": null
+  }
+}

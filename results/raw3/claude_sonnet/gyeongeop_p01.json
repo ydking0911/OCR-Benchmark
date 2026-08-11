@@ -1,0 +1,24 @@
+{
+  "fingerprint": "478374dd3afd8ad971fe63fd25faa6a79e866946f4b54e269de3410c7b2e0abe",
+  "image_sha256": "14aeeab374453a9b73ac871b96a08cfee4df43d3bff586c2ae8a29083a669a50",
+  "result": {
+    "engine_config_id": "claude_sonnet",
+    "sample_id": "gyeongeop_p01",
+    "raw_text": "경업금지 약정서(퇴사자)\n\n 주식회사 ABC(이하, ‘회사’라 함)와 (홍길동)(이하 ‘퇴사자’라 함)은 퇴사함에 있어서, 회사의 영업비밀 보호 및 경쟁업체에 대한 취업 제한과 관련하여 다음과 같이 계약을 체결합니다.\n\n제 1 조 (목적)\n\n   회사와 퇴사자는 회사의 영업비밀 보호 및 퇴사자의 취업 제한과 관련된 양 당사자의 권리의무를 정하기 위하여 본 약정을 체결한다.\n\n제 2 조 (영업비밀)\n\n ① 퇴사자가 회사에 재직 중 취득한 주요 영업비밀 기타 영업자산(이하 ‘영업비밀’이라 한다)은 아래 표에 기재한 바와 같다. 다만, 퇴사자가 회사에 재직 중 취득한 영업비밀이 이에 제한되지는 아니 한다.\n\n ② 제 1 항의 영업비밀은 회사의 소유로서 퇴사자는 이에 대해서 일체의 이의를 제기하지 아니하기로 한다.\n\n제 3 조 (퇴사자의 영업비밀 보호의무)\n\n ① 퇴사자는 회사의 영업비밀을 제 3 자에게 제공하거나 누설해서는 아니 되며, 부정한 목적으로 사용해서는 아니 된다.\n\n ② 퇴사자는 회사의 영업비밀 및 그 복사본, 모방품, 기타 회사의 영업비밀의 전부 또는 일부를 포함하는 일체의 자료를 모두 회사에 반납하고, 반납할 수 없는 것은 폐기하여야 한다.",
+    "usage_raw": {
+      "input_tokens": 4882,
+      "output_tokens": 632,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "stop_reason": "end_turn",
+      "model": "claude-sonnet-5",
+      "max_tokens": 32000
+    },
+    "cost_usd": 0.016084,
+    "cost_krw": 22.19592,
+    "cost_confirmed": true,
+    "latency_ms": 8469,
+    "http_status": 200,
+    "error": null
+  }
+}

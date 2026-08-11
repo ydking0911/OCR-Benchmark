@@ -1,0 +1,28 @@
+{
+  "fingerprint": "105be944daa15dda713dd4d8afa4ec08cb49110f5fa4177c10a21087f9b4da0e",
+  "image_sha256": "a070ea3e8e42cfc47580a8f6c7471b602008132e64417c4c9d820606f206d631",
+  "result": {
+    "engine_config_id": "claude_sonnet_table",
+    "sample_id": "franchise_p46",
+    "raw_text": "<table>\n<tr><td>영업표지 견본</td><td></td></tr>\n<tr><td>등록번호(출원번호)</td><td></td></tr>\n<tr><td>등록결정(심결) 연월일</td><td></td></tr>\n<tr><td>존속기간 (예정) 만료일</td><td></td></tr>\n<tr><td>지정상품 또는 지정서비스업</td><td></td></tr>\n<tr><td>등록권리자</td><td></td></tr>\n</table>\n\n<table>\n<tr><td>본인은 본 페이지의 내용에 대한 설명을 듣고, 이를완전히 이해하였음</td><td>(인)</td></tr>\n</table>",
+    "table_htmls": [
+      "<table>\n<tr><td>영업표지 견본</td><td></td></tr>\n<tr><td>등록번호(출원번호)</td><td></td></tr>\n<tr><td>등록결정(심결) 연월일</td><td></td></tr>\n<tr><td>존속기간 (예정) 만료일</td><td></td></tr>\n<tr><td>지정상품 또는 지정서비스업</td><td></td></tr>\n<tr><td>등록권리자</td><td></td></tr>\n</table>",
+      "<table>\n<tr><td>본인은 본 페이지의 내용에 대한 설명을 듣고, 이를완전히 이해하였음</td><td>(인)</td></tr>\n</table>"
+    ],
+    "usage_raw": {
+      "input_tokens": 5190,
+      "output_tokens": 239,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "stop_reason": "end_turn",
+      "model": "claude-sonnet-5",
+      "max_tokens": 32000
+    },
+    "cost_usd": 0.01277,
+    "cost_krw": 17.6226,
+    "cost_confirmed": true,
+    "latency_ms": 4672,
+    "http_status": 200,
+    "error": null
+  }
+}

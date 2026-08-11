@@ -1,0 +1,24 @@
+{
+  "fingerprint": "15d507d59a55c8b0a53bd6a5f7f4745c521bf3431a3fed1020d2824ac4a4192e",
+  "image_sha256": "2a528f4f06b07fb240c6392ed41e799dde4150de28a8a998022b6004517c1382",
+  "result": {
+    "engine_config_id": "claude_sonnet",
+    "sample_id": "franchise_p31",
+    "raw_text": "권장할 수 있다.\n\n② 가맹점사업자가 소비자가격을 변경하고자 하는 경우, 가맹본부에 사전 통보하고\n\n가맹본부와 협의하여야 한다.\n\n③ 가맹본부는 가맹점사업자가 소비자가격 변경 협의 요청을 할 경우, 이에 성실히\n\n임해야 한다.\n\n제 35 조 (회계장부 등 작성 및 보고의무)\n\n① 가맹점사업자는 가맹점 영업과 관련하여 영업장부와 회계자료를 성실히 작성 .\n\n유지하여야 한다.\n\n② 가맹점사업자는 가맹본부가 정기납입경비 산정, 정보공개서 작성 등을 위해\n\n영업장부 또는 회계자료 등을 요청할 경우 이를 서면 또는 전산시스템, 이메일\n\n등을 통하여 보고하여야 한다.\n\n③ 가맹점사업자는 가맹본부의 직원 또는 가맹본부가 지정한 사람의 정당한 요구가\n\n있을 때에는 영업장부 등 관련서류를 제시하여야 한다.\n\n④ 가맹점사업자는 가맹본부로부터 사용허가를 받은 영업표지와 특허권 등에 대한\n\n침해를 이유로 제 3 자가 소를 제기한 경우에는 이를 가맹본부에 보고하여야\n\n한다.\n\n제 36 조 (보험)\n\n본인은 본 페이지의 내용에 대한 설명을\n듣고, 이를완전히 이해하였음\n\n(인)",
+    "usage_raw": {
+      "input_tokens": 4882,
+      "output_tokens": 540,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "stop_reason": "end_turn",
+      "model": "claude-sonnet-5",
+      "max_tokens": 32000
+    },
+    "cost_usd": 0.015164,
+    "cost_krw": 20.92632,
+    "cost_confirmed": true,
+    "latency_ms": 9250,
+    "http_status": 200,
+    "error": null
+  }
+}

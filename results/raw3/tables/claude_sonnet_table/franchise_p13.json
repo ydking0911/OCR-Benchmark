@@ -1,0 +1,29 @@
+{
+  "fingerprint": "16b6d277203da4997f3df2a8c121690dd120dd6730b9275fd90cf8239d95fb6e",
+  "image_sha256": "f07bd490d5a2db6c596d39703f2031e51b6183797fc0021954bea071851743d7",
+  "result": {
+    "engine_config_id": "claude_sonnet_table",
+    "sample_id": "franchise_p13",
+    "raw_text": "```html\n<table>\n<tr>\n<td></td>\n<td></td>\n<td>매뉴얼 제공비,<br>오픈지원비 등</td>\n<td></td>\n<td></td>\n<td></td>\n</tr>\n<tr>\n<td>최초교육비</td>\n<td></td>\n<td></td>\n<td></td>\n<td></td>\n<td></td>\n</tr>\n<tr>\n<td></td>\n<td></td>\n<td></td>\n<td></td>\n<td></td>\n<td></td>\n</tr>\n<tr>\n<td></td>\n<td></td>\n<td></td>\n<td></td>\n<td></td>\n<td></td>\n</tr>\n<tr>\n<td>합계</td>\n<td></td>\n<td></td>\n<td></td>\n<td></td>\n<td></td>\n</tr>\n</table>\n\n<table>\n<tr>\n<th>예치가맹금 내역</th>\n<th>금액(단위: 천원)</th>\n</tr>\n<tr>\n<td>가입비</td>\n<td></td>\n</tr>\n<tr>\n<td>최초교육비</td>\n<td></td>\n</tr>\n<tr>\n<td></td>\n<td></td>\n</tr>\n<tr>\n<td></td>\n<td></td>\n</tr>\n<tr>\n<td>합계</td>\n<td></td>\n</tr>\n</table>\n\n<table>\n<tr>\n<td>본인은 본 페이지의 내용에 대한 설명을 듣고, 이를완전히이해하였음</td>\n<td>(인)</td>\n</tr>\n</table>\n```",
+    "table_htmls": [
+      "<table>\n<tr>\n<td></td>\n<td></td>\n<td>매뉴얼 제공비,<br>오픈지원비 등</td>\n<td></td>\n<td></td>\n<td></td>\n</tr>\n<tr>\n<td>최초교육비</td>\n<td></td>\n<td></td>\n<td></td>\n<td></td>\n<td></td>\n</tr>\n<tr>\n<td></td>\n<td></td>\n<td></td>\n<td></td>\n<td></td>\n<td></td>\n</tr>\n<tr>\n<td></td>\n<td></td>\n<td></td>\n<td></td>\n<td></td>\n<td></td>\n</tr>\n<tr>\n<td>합계</td>\n<td></td>\n<td></td>\n<td></td>\n<td></td>\n<td></td>\n</tr>\n</table>",
+      "<table>\n<tr>\n<th>예치가맹금 내역</th>\n<th>금액(단위: 천원)</th>\n</tr>\n<tr>\n<td>가입비</td>\n<td></td>\n</tr>\n<tr>\n<td>최초교육비</td>\n<td></td>\n</tr>\n<tr>\n<td></td>\n<td></td>\n</tr>\n<tr>\n<td></td>\n<td></td>\n</tr>\n<tr>\n<td>합계</td>\n<td></td>\n</tr>\n</table>",
+      "<table>\n<tr>\n<td>본인은 본 페이지의 내용에 대한 설명을 듣고, 이를완전히이해하였음</td>\n<td>(인)</td>\n</tr>\n</table>"
+    ],
+    "usage_raw": {
+      "input_tokens": 5190,
+      "output_tokens": 522,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "stop_reason": "end_turn",
+      "model": "claude-sonnet-5",
+      "max_tokens": 32000
+    },
+    "cost_usd": 0.0156,
+    "cost_krw": 21.528,
+    "cost_confirmed": true,
+    "latency_ms": 7280,
+    "http_status": 200,
+    "error": null
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "fingerprint": "09b6422c626594fe151760c83714f45914966661458ff2a5d11b828e5c17075a",
+  "image_sha256": "f07bd490d5a2db6c596d39703f2031e51b6183797fc0021954bea071851743d7",
+  "result": {
+    "engine_config_id": "upstage_standard",
+    "sample_id": "franchise_p13",
+    "raw_text": "|  | 매뉴얼 제공비, 오픈지원비 등 |  |  |  |\n| --- | --- | --- | --- | --- |\n| 최초교육비 |  |  |  |  |\n|  |  |  |  |  |\n|  |  |  |  |  |\n| 합계 |  |  |  |  |\n\n② 가맹점사업자는 가맹점 영업이 개시되거나 계약체결일로부터 ( )일이 경과할\n때까지 제 1 항의 최초가맹금 중 다음 표에 기재된 내역을 가맹본부가 지정하는\n아래 금융회사에 예치하여야 한다. 다만, 가맹본부가 제 14 조의 가맹점사업자\n피해보상보험 등을 체결한 경우에는 가맹본부가 직접 지급받을 수 있다.\n| 예치가맹금 내역 | 금액(단위: 천원) |\n| --- | --- |\n| 가입비 |  |\n| 최초교육비 |  |\n|  |  |\n|  |  |\n| 합계 |  |\n\n* 예치금융회사: 은행 지점 부\n계좌번호: 예금주:\n③ 가맹본부는 다음 각 호의 어느 하나에 해당하는 경우에 위 예치기관의 장에게\n예치가맹금의 지급을 요청할 수 있다.\n1. 가맹점사업자가 영업을 개시한 경우\n2. 가맹계약 체결일로부터 2 개월이 경과한 경우\n제 16 조 [가맹금의 반환]\n| 본인은 본 페이지의 내용에 대한 설명을 듣고, 이를완전히 이해하였음 | (인) |\n| --- | --- |",
+    "table_htmls": [
+      "<table id='0' style='font-size:20px'><thead><tr><td></td><td>매뉴얼 제공비, 오픈지원비 등</td><td></td><td></td><td></td></tr></thead><tbody><tr><td>최초교육비</td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td></tr><tr><td>합계</td><td></td><td></td><td></td><td></td></tr></tbody></table>",
+      "<table id='2' style='font-size:20px'><thead><tr><td>예치가맹금 내역</td><td>금액(단위: 천원)</td></tr></thead><tbody><tr><td>가입비</td><td></td></tr><tr><td>최초교육비</td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td>합계</td><td></td></tr></tbody></table>",
+      "<table id='7' style='font-size:14px'><thead></thead><tbody><tr><td>본인은 본 페이지의 내용에 대한 설명을 듣고, 이를완전히 이해하였음</td><td>(인)</td></tr></tbody></table>"
+    ],
+    "usage_raw": {
+      "pages": 1,
+      "model": "document-parse-260630",
+      "api": "2.0",
+      "element_count": 8
+    },
+    "cost_usd": 0.01,
+    "cost_krw": 13.8,
+    "cost_confirmed": true,
+    "latency_ms": 2358,
+    "http_status": 200,
+    "error": null
+  }
+}

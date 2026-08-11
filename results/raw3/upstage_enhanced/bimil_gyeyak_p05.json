@@ -1,0 +1,21 @@
+{
+  "fingerprint": "ed750a2addef371824ac330dab6b50954974cce4d7ae439d5ea027dce6b5efb5",
+  "image_sha256": "45d99e09026fe7eaaa8d027ab833838091aa6a7a19f5497a6344d6a15d80add4",
+  "result": {
+    "engine_config_id": "upstage_enhanced",
+    "sample_id": "bimil_gyeyak_p05",
+    "raw_text": "※ 본 서식은 불특정 다수의 영업비밀 보유자(기업 또는 개인)가 활용함을 상정하여 작성된 표준서식으로서\n사용자의 개별적인 사정에 따라 수정 또는 변경하여 활용하여야 함.\n※ 본 서식은 어떠한 법적 구속력도 없음.\n각각 서명(또는 기명날인)한 후 각자 1 부씩 보관한다.\n20 년 월 일\n\"ABC\"\n(명칭)\n(주소)\n(대표자) (인)\n\"XYZ\"\n(명칭)\n(주소)\n(대표자)\n(인)",
+    "usage_raw": {
+      "pages": 1,
+      "model": "document-parse-260630",
+      "api": "2.0",
+      "element_count": 9
+    },
+    "cost_usd": 0.03,
+    "cost_krw": 41.4,
+    "cost_confirmed": true,
+    "latency_ms": 2438,
+    "http_status": 200,
+    "error": null
+  }
+}

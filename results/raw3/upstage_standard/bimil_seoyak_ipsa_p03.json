@@ -1,0 +1,21 @@
+{
+  "fingerprint": "f1a1f748de688c7a766c40efde492fd49adcfe436b721b3671468fa18fbc0cff",
+  "image_sha256": "5e7d23eac345b6f500a4fa9b31f07b6cbd99eaaa642cab731eb177ab63ff5248",
+  "result": {
+    "engine_config_id": "upstage_standard",
+    "sample_id": "bimil_seoyak_ipsa_p03",
+    "raw_text": "※ 본 서식은 불특정 다수의 영업비밀 보유자(기업 또는 개인)가 활용함을 상정하여 작성된 표준서식으로서\n사용자의 개별적인 사정에 따라 수정 또는 변경하여 활용하여야 함.\n※ 본 서식은 어떠한 법적 구속력도 없을\n8. 본인은, 퇴사 시 재직 중에 보유하였던 회사의 영업비밀, 회사의 연구개발·영업·재산\n등에 영향을 미칠 수 있는 유형·무형의 정보 기타 회사의 주요 영업자산과 관련된 자료\n모두를 회사에 반납하고, 이에 관한 어떠한 형태의 사본도 개인적으로 보유하지 않으며,\n반납할 수 없는 것은 폐기할 것을 서약합니다.\n위 서약한 사항을 위반할 경우 관련 법규에 의한 민·형사상 책임을 감수할 것임을\n서약합니다.\n(위 내용을 확인하고 이해하였으며, 이에 서명함)\n20__.__.__.\n서약자: (서명)\n주식회사 ABC 귀하",
+    "usage_raw": {
+      "pages": 1,
+      "model": "document-parse-260630",
+      "api": "2.0",
+      "element_count": 7
+    },
+    "cost_usd": 0.01,
+    "cost_krw": 13.8,
+    "cost_confirmed": true,
+    "latency_ms": 2375,
+    "http_status": 200,
+    "error": null
+  }
+}

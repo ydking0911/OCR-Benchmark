@@ -1,0 +1,28 @@
+{
+  "fingerprint": "7c7437d46ab8ee6fc3f168bf3de24d8b90a1dbeed2cc44bdaddc50305c7079cf",
+  "image_sha256": "3a4c13b2730302dfb4f5828e715dd64e97edc111bfd5157f00f1fa524284e80c",
+  "result": {
+    "engine_config_id": "claude_sonnet_table",
+    "sample_id": "franchise_p47",
+    "raw_text": "<table>\n<thead>\n<tr><th>연번</th><th>기기명</th><th>공급가격</th></tr>\n</thead>\n<tbody>\n<tr><td></td><td></td><td></td></tr>\n<tr><td></td><td></td><td></td></tr>\n<tr><td></td><td></td><td></td></tr>\n<tr><td></td><td></td><td></td></tr>\n<tr><td></td><td></td><td></td></tr>\n<tr><td></td><td></td><td></td></tr>\n<tr><td></td><td></td><td></td></tr>\n<tr><td></td><td></td><td></td></tr>\n<tr><td></td><td></td><td></td></tr>\n<tr><td></td><td></td><td></td></tr>\n<tr><td></td><td></td><td></td></tr>\n<tr><td></td><td></td><td></td></tr>\n<tr><td></td><td></td><td></td></tr>\n<tr><td></td><td></td><td></td></tr>\n<tr><td></td><td></td><td></td></tr>\n<tr><td></td><td></td><td></td></tr>\n<tr><td></td><td></td><td></td></tr>\n<tr><td></td><td></td><td></td></tr>\n<tr><td></td><td></td><td></td></tr>\n</tbody>\n</table>\n\n<table>\n<tbody>\n<tr><td>연번</td><td>기기명</td><td>본인은 본 페이지의 내용에 대한 설명을 듣고, 이를완전히이해하였음</td><td>(인)</td></tr>\n</tbody>\n</table>",
+    "table_htmls": [
+      "<table>\n<thead>\n<tr><th>연번</th><th>기기명</th><th>공급가격</th></tr>\n</thead>\n<tbody>\n<tr><td></td><td></td><td></td></tr>\n<tr><td></td><td></td><td></td></tr>\n<tr><td></td><td></td><td></td></tr>\n<tr><td></td><td></td><td></td></tr>\n<tr><td></td><td></td><td></td></tr>\n<tr><td></td><td></td><td></td></tr>\n<tr><td></td><td></td><td></td></tr>\n<tr><td></td><td></td><td></td></tr>\n<tr><td></td><td></td><td></td></tr>\n<tr><td></td><td></td><td></td></tr>\n<tr><td></td><td></td><td></td></tr>\n<tr><td></td><td></td><td></td></tr>\n<tr><td></td><td></td><td></td></tr>\n<tr><td></td><td></td><td></td></tr>\n<tr><td></td><td></td><td></td></tr>\n<tr><td></td><td></td><td></td></tr>\n<tr><td></td><td></td><td></td></tr>\n<tr><td></td><td></td><td></td></tr>\n<tr><td></td><td></td><td></td></tr>\n</tbody>\n</table>",
+      "<table>\n<tbody>\n<tr><td>연번</td><td>기기명</td><td>본인은 본 페이지의 내용에 대한 설명을 듣고, 이를완전히이해하였음</td><td>(인)</td></tr>\n</tbody>\n</table>"
+    ],
+    "usage_raw": {
+      "input_tokens": 5190,
+      "output_tokens": 536,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "stop_reason": "end_turn",
+      "model": "claude-sonnet-5",
+      "max_tokens": 32000
+    },
+    "cost_usd": 0.01574,
+    "cost_krw": 21.7212,
+    "cost_confirmed": true,
+    "latency_ms": 5828,
+    "http_status": 200,
+    "error": null
+  }
+}

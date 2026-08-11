@@ -1,0 +1,21 @@
+{
+  "fingerprint": "4a4647f361c547a83aeb91bc03b583850f33f95915adc818b6e73c164c2df5b4",
+  "image_sha256": "a070ea3e8e42cfc47580a8f6c7471b602008132e64417c4c9d820606f206d631",
+  "result": {
+    "engine_config_id": "upstage_enhanced",
+    "sample_id": "franchise_p46",
+    "raw_text": "별첨 [2] : 가맹점사업자에게 사용이 허가된 영업표지의 표시\n(1) 허용대상 영업표지\n| 영업표지 견본 |  |\n| --- | --- |\n| 등록번호(출원번호) |  |\n| 등록결정(심결) 연월일 |  |\n| 존속기간 (예정) 만료일 |  |\n| 지정상품 또는 지정서비스업 |  |\n| 등록권리자 |  |\n\n(2) 영업표지 사용방법 : 간판, 상징물, 홍보물, 집기 비품, 문구류 등에 표시\n(3) 영업표지의 사용기간 : 이 계약의 효력이 존속되는 기간과 원칙적으로 동일함\n(4) 영업표지의 사용지역 : 별도 약정이 없는 한 해당 영업지역 내로 한정됨\n| 본인은 본 페이지의 내용에 대한 설명을 듣고, 이를완전히 이해하였음 | (인) |\n| --- | --- |",
+    "usage_raw": {
+      "pages": 1,
+      "model": "document-parse-260630",
+      "api": "2.0",
+      "element_count": 8
+    },
+    "cost_usd": 0.03,
+    "cost_krw": 41.4,
+    "cost_confirmed": true,
+    "latency_ms": 3438,
+    "http_status": 200,
+    "error": null
+  }
+}

@@ -1,52 +1,74 @@
-# OcrBenchmark
+# 📑 OcrBenchmark: 한국어 계약서 OCR 3-엔진 벤치마크
 
-한국어 계약서 PDF를 대상으로 **Upstage Document Parse**, **Naver CLOVA General OCR**, **Claude Vision(Sonnet 5)** 세 엔진의 텍스트 전사 정확도(CER/WER/유사도)와 실비용을 실제 API 호출로 측정해 비교하는 벤치마크입니다.
+## Update Logs
 
-이 리포지토리에는 성격이 다른 두 계획이 있습니다:
+- 2026-08-11: 표 구조(TEDS) 채점 결과 공개 — [Table Structure Leaderboard](#table-structure-leaderboard-teds) ([`results/report3/comparison.md`](results/report3/comparison.md) 7절)
+- 2026-08-11: Naver CLOVA 실제 단가 확정 반영 (NCP 콘솔 확인, 글자 추출 3원/건)
+- 2026-08-11: Upstage Document Parse / Naver CLOVA General OCR / Claude Vision(Sonnet 5) 65페이지 전체 벤치마크 결과 공개 — [Text Accuracy Leaderboard](#text-accuracy-leaderboard)
 
-| 계획                                               | 문서                                                                                                                       | 상태                                         |
-| -------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
-| **3-엔진 비교** (이 README가 다루는 것)            | [`.omc/plans/plan-upstage-clova-claude-ocr-benchmark.md`](.omc/plans/plan-upstage-clova-claude-ocr-benchmark.md)           | **완료 — 65페이지 전체 실행, 리포트 생성됨** |
-| Claude 전용 벤치마크 (Haiku/Sonnet/Opus, 해상도별) | [`.omc/plans/ralplan-claude-vision-contract-ocr-benchmark.md`](.omc/plans/ralplan-claude-vision-contract-ocr-benchmark.md) | 별도 계획, 미구현                            |
+---
 
-두 계획은 `samples/pdfs/`와 정답 추출 방식(`sample_id`, `DOC_SLUG_MAP`, hangul_ratio 유효성 게이트)을 공유하도록 설계되어 있습니다.
+<br>
 
-## 결과 요약 (2026-08-11, 65페이지 전체 실행 완료)
+OcrBenchmark은 한국어 계약서 PDF 7종·65페이지를 대상으로 **Upstage Document Parse**, **Naver CLOVA General OCR**, **Claude Vision(Sonnet 5)** 세 엔진의 텍스트 전사 정확도, 표 구조 인식 정확도, 실비용을 실제 API 호출로 측정한 벤치마크입니다.
 
-### 지표 설명 — CER / WER / 유사도
+정답은 두 종류입니다 — 텍스트 채점은 PyMuPDF로 PDF에서 직접 추출한 원문을, 표 구조 채점은 사람이 렌더링된 페이지 이미지를 직접 검수해 작성한 표 HTML을 정답으로 씁니다. 사람이 앵커링하는 합격/불합격 게이트는 두지 않습니다 — 원시 수치와 실비용만 제시하고, 어떤 엔진을 쓸지는 표를 보고 사람이 판단합니다.
+<br/>
 
-정확도는 각 엔진의 전사 결과를 PyMuPDF로 뽑은 원문(정답)과 비교해 계산합니다. 값이 **작을수록** 좋습니다(CER/WER는 오류율).
+## 벤치마크 실행 코드
 
-| 지표                                        | 뜻                                                       | 계산 방식                                                                                                                |
-| ------------------------------------------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| **CER** (Character Error Rate, 문자 오류율) | 정답과 비교했을 때 **글자 단위**로 얼마나 틀렸는지       | (삽입+삭제+치환된 문자 수) / 정답 전체 문자 수. 예: CER 0.045 = 100자 중 약 4.5자꼴로 틀림                               |
-| **WER** (Word Error Rate, 단어 오류율)      | 정답과 비교했을 때 **단어(어절) 단위**로 얼마나 틀렸는지 | (삽입+삭제+치환된 단어 수) / 정답 전체 단어 수. 한 글자만 틀려도 그 단어 전체가 오류로 잡히므로 보통 CER보다 값이 큽니다 |
-| **유사도(%)**                               | 위 오류율의 반대 개념, 직관적으로 읽기 위한 값           | 대략 `(1 - CER) × 100`에 가까운 값으로, 리포트의 헤드라인 지표입니다                                                     |
+### 셋업
 
-이 벤치마크는 표·체크박스 같은 **구조화 출력은 정량 채점하지 않고** 정적 기능 체크리스트로만 비교합니다(아래 2절) — CER/WER/유사도는 어디까지나 **평문 텍스트 전사** 정확도만 나타냅니다.
+```bash
+py -m pip install -r requirements.txt
+cp .env.example .env   # ANTHROPIC_API_KEY / UPSTAGE_API_KEY / NCP_CLOVA_OCR_SECRET / NCP_CLOVA_OCR_INVOKE_URL 입력
+```
 
-### 최종 결과 (전체 65페이지 평균)
+Windows 환경에서는 `python`이 WindowsApps 스텁으로 잡히므로 반드시 `py`를 사용합니다.
 
-| 순위(1만 페이지 환산 비용) | 엔진 구성                          |              CER |    WER |       유사도(%) | 실패 | 비고                                                                        |
-| -------------------------- | ---------------------------------- | ---------------: | -----: | --------------: | ---: | --------------------------------------------------------------------------- |
-| 1                          | Naver CLOVA 문자 인식만 — $21.74   |           0.0449 | 0.1733 |           97.13 | 0/65 | 가격·정확도 모두 최상위권, 콘솔 확정 단가 반영                              |
-| 2                          | Upstage Standard — $100.00         |           0.1781 | 0.3412 |           92.61 | 0/65 | `jichul`/`eopmu`(표 양식)에서 30~78%대로 붕괴 — 원인 확인됨(아래)           |
-| 3                          | Claude Sonnet 5 — $165.66          | **0.0437**(최저) | 0.1864 | **97.71**(최고) | 0/65 | 지연 ~11초/페이지, 비결정적                                                 |
-| 4                          | Naver CLOVA 문자+표 추출 — $181.16 |           0.0449 | 0.1733 |           97.13 | 0/65 | 표 추출이 텍스트 정확도엔 영향 없음(문자 인식만과 CER/WER/유사도 전부 동일) |
-| 5                          | Upstage Enhanced — $300.00         |           0.2711 | 0.4181 |           91.01 | 0/65 | 3배 비싸면서 Standard보다도 낮은 정확도                                     |
+### 실행
 
-**핵심 발견**: Upstage가 `jichul`/`eopmu`에서 붕괴한 원인을 `content.html`/`elements` 구조화 출력과 직접 대조해 확정했습니다 — **인식 실패가 아니라 Upstage 자체의 markdown `text` 변환기 버그**입니다. `rowspan`/`colspan`으로 병합된 표 셀을 HTML에서는 정확히 인식하지만, markdown으로 변환할 때 병합 셀 내용을 스팬된 모든 행/열에 중복 삽입합니다. 구조화 출력(`html`/`elements`)을 직접 소비하는 파이프라인이라면 이 정확도 열세는 적용되지 않습니다.
+```bash
+py scripts/prepare_ground_truth.py          # 정답 데이터 준비 (API 비용 없음, 로컬 PDF만 사용)
+py scripts/run_ocr3_benchmark.py --dry-run  # 스모크 테스트 (3페이지 x 5구성 = 15콜)
+py scripts/run_ocr3_benchmark.py            # 전체 실행 (65페이지 x 5구성 = 325콜, 캐시로 재실행 무료)
+py scripts/run_ocr3_benchmark.py --tables   # + 표 구조(TEDS) 채점 (9페이지 x 4구성, 별도 과금)
 
-### 표 구조 정확도 — TEDS (9페이지, 2026-08-11)
+# 엔진 하나만
+py scripts/run_ocr3_benchmark.py --engine upstage          # upstage | clova | claude | <config_id>
+py scripts/run_ocr3_benchmark.py --tables --engine clova
+```
+
+리포트는 `results/report3/comparison.md`에 생성됩니다(가격순 비교표 + 기능 체크리스트 + 문서별 유사도 + 표 구조(TEDS) + 추천 방안). `--tables`는 opt-in이며 기존 텍스트 채점과 완전히 분리된 캐시(`results/raw3/tables/`)·별도 과금을 씁니다.
+<br/>
+
+## Text Accuracy Leaderboard
+
+전사 결과를 PyMuPDF 원문과 비교한 CER(문자 오류율)·WER(단어 오류율)·유사도(%)로 채점했습니다. 값이 작을수록(유사도는 클수록) 정확합니다.
+
+| Engine Config                     | Cost / 10k pages |        CER |    WER | Similarity | Failures |
+| --------------------------------- | ---------------: | ---------: | -----: | ---------: | -------: |
+| **Naver CLOVA — 문자 인식만**     |       **$21.74** |     0.0449 | 0.1733 |      97.13 |     0/65 |
+| Upstage Document Parse — Standard |          $100.00 |     0.1781 | 0.3412 |      92.61 |     0/65 |
+| Claude Sonnet 5 (고해상도)        |          $165.66 | **0.0437** | 0.1864 |  **97.71** |     0/65 |
+| Naver CLOVA — 문자 인식 + 표 추출 |          $181.16 |     0.0449 | 0.1733 |      97.13 |     0/65 |
+| Upstage Document Parse — Enhanced |          $300.00 |     0.2711 | 0.4181 |      91.01 |     0/65 |
+
+가격순 오름차순 정렬, 각 지표의 최고값을 굵게 표시했습니다(가격은 CLOVA, 정확도는 Claude — 이 벤치마크는 단일 승자를 정하지 않습니다).
+
+> Upstage가 `jichul`(지출결의서)·`eopmu`(업무협약서)에서 91%→30~78%대로 붕괴하는 현상을 `content.html`/`elements` 구조화 출력과 직접 대조해 원인을 확정했습니다 — 인식 실패가 아니라 Upstage 자체의 markdown `text` 변환기가 `rowspan`/`colspan` 병합 셀을 스팬된 모든 칸에 중복 삽입하는 버그입니다. 아래 Table Structure 채점이 이걸 정량적으로도 재확인합니다.
+> <br/>
+
+## Table Structure Leaderboard (TEDS)
 
 텍스트 정확도(CER/WER)는 표 구조를 채점하지 않습니다(위 §지표 설명). 사람이 직접 검수해 확정한 9개 표 페이지에 대해, **TEDS**(Tree-Edit-Distance-based Similarity — PubTabNet·Upstage DP-Bench와 같은 계열 지표, 표를 HTML 트리로 놓고 트리 편집 거리 기반 유사도를 계산, 0~1, 클수록 정확)로 별도 채점했습니다. `rowspan`/`colspan`은 셀의 구조적 정체성에 포함되므로, 병합 셀을 여러 칸으로 쪼개 복제하면 감점됩니다 — Upstage의 markdown 중복 버그가 바로 이렇게 잡힙니다.
 
-| 엔진 구성 | TEDS 평균 | TEDS(헤더 무시) | 표 미검출 |
-|---|---:|---:|---:|
-| Claude Sonnet 5 (표 구조 추출 전용 호출) | **0.789**(최고) | 0.800 | 0/9 |
-| Upstage Enhanced | 0.654 | 0.756 | 0/9 |
-| Upstage Standard | 0.599 | 0.713 | 0/9 |
-| Naver CLOVA 문자+표 추출 | 0.587(최저) | 0.675 | 0/9 |
+| 엔진 구성                                |       TEDS 평균 | TEDS(헤더 무시) | 표 미검출 |
+| ---------------------------------------- | --------------: | --------------: | --------: |
+| Claude Sonnet 5 (표 구조 추출 전용 호출) | **0.789**(최고) |           0.800 |       0/9 |
+| Upstage Enhanced                         |           0.654 |           0.756 |       0/9 |
+| Upstage Standard                         |           0.599 |           0.713 |       0/9 |
+| Naver CLOVA 문자+표 추출                 |     0.587(최저) |           0.675 |       0/9 |
 
 **표 구조는 텍스트 순위를 완전히 뒤집습니다**: 텍스트에서 최상위였던 Clova가 표 구조에서는 최하위이고, 원래 표 추출 기능이 없어 새 프롬프트로 즉석 대응한 Claude가 평균 1위입니다. 다만 페이지별 편차가 극심합니다 — 가장 복잡한 병합 표(`jichul_p01`, rowspan 9회·colspan 13회)에서는 Claude가 최저점(0.143), 오히려 Upstage Standard가 최고점(0.974)으로 완전히 역전됩니다. 대형 희소 그리드(`franchise_p47/48`, 20행)에서는 반대로 Upstage가 붕괴(0.13대)하고 Claude/Clova가 거의 완벽(0.9+)합니다. **결론: 모든 표 유형에서 이기는 단일 엔진은 없습니다** — 표가 복잡한 병합 구조인지, 단순 대형 그리드인지에 따라 유리한 엔진이 다릅니다. 상세 페이지별 수치와 근거는 `results/report3/comparison.md` 7절 참고.
 

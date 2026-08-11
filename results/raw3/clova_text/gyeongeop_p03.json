@@ -1,0 +1,22 @@
+{
+  "fingerprint": "bfa7a6dbaf03cfeb7b6ee94fccdc4cb9e2d049c8bdc19a159459625f9e882d01",
+  "image_sha256": "8c120ec292fff239031234b203a19fb8fb8d3dea13bfc70fc122eb9f2c87ddf1",
+  "result": {
+    "engine_config_id": "clova_text",
+    "sample_id": "gyeongeop_p03",
+    "raw_text": "1 심 관할법원으로 하여 소송을 통해 분쟁을 해결하기로 한다.\n회사와 퇴사자는 본 계약의 성립을 증명하기 위하여 본 계약서 2 부를 작성하여 각각 서명\n(또는 기명날인)한 후 각자 1 부씩 보관한다.\n(위 내용을 확인하고 이해하였으며, 이에 서명함)\n20\n서약자: 홍 길 동 (서명)\n주식회사 ABC 귀하",
+    "usage_raw": {
+      "requests": 1,
+      "field_count": 45,
+      "table_count": 0,
+      "infer_result": "SUCCESS",
+      "uid": "8790f9dda7b447c29ce24e76437b5a24"
+    },
+    "cost_usd": null,
+    "cost_krw": null,
+    "cost_confirmed": false,
+    "latency_ms": 1952,
+    "http_status": 200,
+    "error": null
+  }
+}

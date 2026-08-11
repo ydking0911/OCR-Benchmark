@@ -1,0 +1,21 @@
+{
+  "fingerprint": "5ec5269c94d56f1369106a57af8b6222ca9903d4d724cc9cf9047e39759a4513",
+  "image_sha256": "46008d2f2445bcc6d27b1d82415278f3c77992bcd1063e4079b67f4e50616c7e",
+  "result": {
+    "engine_config_id": "upstage_standard",
+    "sample_id": "franchise_p44",
+    "raw_text": "사업자등록번호:\n| 상 | 호: |\n| --- | --- |\n| 주 | 소: |\n| 연 | 락 처: |\n\n[가맹점사업자]\n| 성 | 명: (인) |\n| --- | --- |\n| 생 | 년 월 일: |\n| 점 | 포 명: |\n| 주 | 소: |\n| 연 | 락 처: |\n\n| 본인은 본 페이지의 내용에 대한 설명을 듣고, 이를완전히 이해하였음 | (인) |\n| --- | --- |",
+    "usage_raw": {
+      "pages": 1,
+      "model": "document-parse-260630",
+      "api": "2.0",
+      "element_count": 6
+    },
+    "cost_usd": 0.01,
+    "cost_krw": 13.8,
+    "cost_confirmed": true,
+    "latency_ms": 2375,
+    "http_status": 200,
+    "error": null
+  }
+}

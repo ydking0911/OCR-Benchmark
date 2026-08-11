@@ -1,0 +1,477 @@
+{
+  "fingerprint": "f21cebaaeb487ddd6dd16488e6acbf58c3c944d60813f6beb8d457c49d0cc5e6",
+  "image_sha256": "3a4c13b2730302dfb4f5828e715dd64e97edc111bfd5157f00f1fa524284e80c",
+  "result": {
+    "engine_config_id": "clova_table",
+    "sample_id": "franchise_p47",
+    "raw_text": "별첨 [3] : 공급 기기 등의 내역\n연번\n기기명\n공급가격\n본인은 본 페이지의 내용에 대한 설명을\n듣고, 이를 완전히 이해하였음\n(인)",
+    "table_htmls": [
+      "<table><tbody><tr><td>연번</td><td>기기명</td><td>공급가격</td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></tbody></table>",
+      "<table><tbody><tr><td>본인은 본 페이지의 내용에 대한 설명을 듣고, 이를 완전히 이해하였음</td><td rowspan=\"2\">(인)</td></tr><tr><td></td></tr></tbody></table>"
+    ],
+    "usage_raw": {
+      "requests": 1,
+      "field_count": 21,
+      "table_count": 2,
+      "infer_result": "SUCCESS",
+      "uid": "22d8ac6ed8114ec0ac0eb015a72f2f5c",
+      "tables_normalized": [
+        {
+          "cells": [
+            {
+              "rowIndex": 0,
+              "columnIndex": 0,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": "연번"
+            },
+            {
+              "rowIndex": 1,
+              "columnIndex": 0,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 2,
+              "columnIndex": 0,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 3,
+              "columnIndex": 0,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 4,
+              "columnIndex": 0,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 5,
+              "columnIndex": 0,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 6,
+              "columnIndex": 0,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 7,
+              "columnIndex": 0,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 8,
+              "columnIndex": 0,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 9,
+              "columnIndex": 0,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 10,
+              "columnIndex": 0,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 11,
+              "columnIndex": 0,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 12,
+              "columnIndex": 0,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 13,
+              "columnIndex": 0,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 14,
+              "columnIndex": 0,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 15,
+              "columnIndex": 0,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 16,
+              "columnIndex": 0,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 17,
+              "columnIndex": 0,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 18,
+              "columnIndex": 0,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 19,
+              "columnIndex": 0,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 0,
+              "columnIndex": 1,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": "기기명"
+            },
+            {
+              "rowIndex": 1,
+              "columnIndex": 1,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 2,
+              "columnIndex": 1,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 3,
+              "columnIndex": 1,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 4,
+              "columnIndex": 1,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 5,
+              "columnIndex": 1,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 6,
+              "columnIndex": 1,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 7,
+              "columnIndex": 1,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 8,
+              "columnIndex": 1,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 9,
+              "columnIndex": 1,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 10,
+              "columnIndex": 1,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 11,
+              "columnIndex": 1,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 12,
+              "columnIndex": 1,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 13,
+              "columnIndex": 1,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 14,
+              "columnIndex": 1,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 15,
+              "columnIndex": 1,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 16,
+              "columnIndex": 1,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 17,
+              "columnIndex": 1,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 18,
+              "columnIndex": 1,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 19,
+              "columnIndex": 1,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 0,
+              "columnIndex": 2,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": "공급가격"
+            },
+            {
+              "rowIndex": 1,
+              "columnIndex": 2,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 2,
+              "columnIndex": 2,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 3,
+              "columnIndex": 2,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 4,
+              "columnIndex": 2,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 5,
+              "columnIndex": 2,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 6,
+              "columnIndex": 2,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 7,
+              "columnIndex": 2,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 8,
+              "columnIndex": 2,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 9,
+              "columnIndex": 2,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 10,
+              "columnIndex": 2,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 11,
+              "columnIndex": 2,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 12,
+              "columnIndex": 2,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 13,
+              "columnIndex": 2,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 14,
+              "columnIndex": 2,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 15,
+              "columnIndex": 2,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 16,
+              "columnIndex": 2,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 17,
+              "columnIndex": 2,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 18,
+              "columnIndex": 2,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 19,
+              "columnIndex": 2,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            }
+          ]
+        },
+        {
+          "cells": [
+            {
+              "rowIndex": 0,
+              "columnIndex": 0,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": "본인은 본 페이지의 내용에 대한 설명을 듣고, 이를 완전히 이해하였음"
+            },
+            {
+              "rowIndex": 1,
+              "columnIndex": 0,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 0,
+              "columnIndex": 1,
+              "rowSpan": 2,
+              "columnSpan": 1,
+              "text": "(인)"
+            }
+          ]
+        }
+      ]
+    },
+    "cost_usd": 0.018115942028985508,
+    "cost_krw": 25,
+    "cost_confirmed": true,
+    "latency_ms": 1921,
+    "http_status": 200,
+    "error": null
+  }
+}

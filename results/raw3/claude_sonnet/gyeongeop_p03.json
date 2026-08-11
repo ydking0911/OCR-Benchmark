@@ -1,0 +1,24 @@
+{
+  "fingerprint": "56a1dd07814c2c74b5618c43eca6249a37abbb6447097c5a856548497c44682a",
+  "image_sha256": "8c120ec292fff239031234b203a19fb8fb8d3dea13bfc70fc122eb9f2c87ddf1",
+  "result": {
+    "engine_config_id": "claude_sonnet",
+    "sample_id": "gyeongeop_p03",
+    "raw_text": "1심 관할법원으로 하여 소송을 통해 분쟁을 해결하기로 한다.\n\n회사와 퇴사자는 본 계약의 성립을 증명하기 위하여 본 계약서 2 부를 작성하여 각각 서명\n(또는 기명날인)한 후 각자 1 부씩 보관한다.\n\n(위 내용을 확인하고 이해하였으며, 이에 서명함)\n\n20__. __. __.\n\n서약자: 홍 길 동 (서명)\n\n주식회사 ABC 귀하",
+    "usage_raw": {
+      "input_tokens": 4882,
+      "output_tokens": 183,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "stop_reason": "end_turn",
+      "model": "claude-sonnet-5",
+      "max_tokens": 32000
+    },
+    "cost_usd": 0.011594,
+    "cost_krw": 15.99972,
+    "cost_confirmed": true,
+    "latency_ms": 5032,
+    "http_status": 200,
+    "error": null
+  }
+}

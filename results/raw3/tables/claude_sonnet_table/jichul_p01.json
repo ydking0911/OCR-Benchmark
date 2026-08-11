@@ -1,0 +1,27 @@
+{
+  "fingerprint": "2bcd61baa5ed4360db59b0dae8650ed8aa3636c06cbbae20cf69b9fc0a790b24",
+  "image_sha256": "8a52a720c968943cba27e36dd140dce4c2ecfc755a46333711dd1f0ee65f0dc9",
+  "result": {
+    "engine_config_id": "claude_sonnet_table",
+    "sample_id": "jichul_p01",
+    "raw_text": "```html\n<table>\n<tr>\n<td>문서번호</td>\n<td rowspan=\"2\">결재</td>\n<td>담당</td>\n<td>팀장</td>\n<td>센터장</td>\n</tr>\n<tr>\n<td>제 호</td>\n<td></td>\n<td></td>\n<td></td>\n</tr>\n<tr>\n<td colspan=\"5\">지출금액 일금 원정( \\ )</td>\n</tr>\n<tr>\n<td>발의일</td>\n<td></td>\n<td>(인)</td>\n<td colspan=\"2\" rowspan=\"3\">지출예산항목</td>\n</tr>\n<tr>\n<td rowspan=\"2\">지출일</td>\n<td rowspan=\"2\"></td>\n<td rowspan=\"2\">(인)</td>\n</tr>\n<tr>\n</tr>\n<tr>\n<td></td>\n<td></td>\n<td></td>\n<td>단위사업</td>\n<td></td>\n</tr>\n<tr>\n<td></td>\n<td></td>\n<td></td>\n<td>예산항목</td>\n<td></td>\n</tr>\n<tr>\n<td colspan=\"5\">내 역</td>\n</tr>\n<tr>\n<td colspan=\"3\">적요</td>\n<td colspan=\"2\">금액</td>\n</tr>\n<tr>\n<td colspan=\"3\"></td>\n<td colspan=\"2\">원</td>\n</tr>\n<tr>\n<td rowspan=\"2\">지출처</td>\n<td rowspan=\"2\"></td>\n<td rowspan=\"2\">지출방법</td>\n<td>은행명</td>\n<td></td>\n</tr>\n<tr>\n<td>예금주</td>\n<td></td>\n</tr>\n<tr>\n<td></td>\n<td></td>\n<td></td>\n<td>계좌번호</td>\n<td></td>\n</tr>\n<tr>\n<td>영수</td>\n<td colspan=\"4\">상기금액을 영수함<br>년 월 일<br>영수인 (인)</td>\n</tr>\n</table>\n```",
+    "table_htmls": [
+      "<table>\n<tr>\n<td>문서번호</td>\n<td rowspan=\"2\">결재</td>\n<td>담당</td>\n<td>팀장</td>\n<td>센터장</td>\n</tr>\n<tr>\n<td>제 호</td>\n<td></td>\n<td></td>\n<td></td>\n</tr>\n<tr>\n<td colspan=\"5\">지출금액 일금 원정( \\ )</td>\n</tr>\n<tr>\n<td>발의일</td>\n<td></td>\n<td>(인)</td>\n<td colspan=\"2\" rowspan=\"3\">지출예산항목</td>\n</tr>\n<tr>\n<td rowspan=\"2\">지출일</td>\n<td rowspan=\"2\"></td>\n<td rowspan=\"2\">(인)</td>\n</tr>\n<tr>\n</tr>\n<tr>\n<td></td>\n<td></td>\n<td></td>\n<td>단위사업</td>\n<td></td>\n</tr>\n<tr>\n<td></td>\n<td></td>\n<td></td>\n<td>예산항목</td>\n<td></td>\n</tr>\n<tr>\n<td colspan=\"5\">내 역</td>\n</tr>\n<tr>\n<td colspan=\"3\">적요</td>\n<td colspan=\"2\">금액</td>\n</tr>\n<tr>\n<td colspan=\"3\"></td>\n<td colspan=\"2\">원</td>\n</tr>\n<tr>\n<td rowspan=\"2\">지출처</td>\n<td rowspan=\"2\"></td>\n<td rowspan=\"2\">지출방법</td>\n<td>은행명</td>\n<td></td>\n</tr>\n<tr>\n<td>예금주</td>\n<td></td>\n</tr>\n<tr>\n<td></td>\n<td></td>\n<td></td>\n<td>계좌번호</td>\n<td></td>\n</tr>\n<tr>\n<td>영수</td>\n<td colspan=\"4\">상기금액을 영수함<br>년 월 일<br>영수인 (인)</td>\n</tr>\n</table>"
+    ],
+    "usage_raw": {
+      "input_tokens": 5190,
+      "output_tokens": 669,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "stop_reason": "end_turn",
+      "model": "claude-sonnet-5",
+      "max_tokens": 32000
+    },
+    "cost_usd": 0.01707,
+    "cost_krw": 23.556599999999996,
+    "cost_confirmed": true,
+    "latency_ms": 7141,
+    "http_status": 200,
+    "error": null
+  }
+}

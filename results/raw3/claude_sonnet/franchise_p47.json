@@ -1,0 +1,24 @@
+{
+  "fingerprint": "c07e3887639dde506b26fbbfbabad2cc50c04f58565a8c9a30e66fdee6f50721",
+  "image_sha256": "3a4c13b2730302dfb4f5828e715dd64e97edc111bfd5157f00f1fa524284e80c",
+  "result": {
+    "engine_config_id": "claude_sonnet",
+    "sample_id": "franchise_p47",
+    "raw_text": "별첨 [3] : 공급 기기 등의 내역\n\n연번\t기기명\t공급가격\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\n본인은 본 페이지의 내용에 대한 설명을\n듣고, 이를완전히이해하였음\t(인)\n\n연번\t기기명",
+    "usage_raw": {
+      "input_tokens": 4882,
+      "output_tokens": 153,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "stop_reason": "end_turn",
+      "model": "claude-sonnet-5",
+      "max_tokens": 32000
+    },
+    "cost_usd": 0.011294,
+    "cost_krw": 15.58572,
+    "cost_confirmed": true,
+    "latency_ms": 4234,
+    "http_status": 200,
+    "error": null
+  }
+}

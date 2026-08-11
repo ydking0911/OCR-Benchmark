@@ -1,0 +1,22 @@
+{
+  "fingerprint": "2d2455518300e3ee2d1a79786ff4ba12b891f8033c5086db8b0e2bf51ce3b88c",
+  "image_sha256": "7ca9d7f0ea4e737e70ea4e15f01adbf37ef4e73ea198e73a0cd0d3eee957ec9b",
+  "result": {
+    "engine_config_id": "clova_table",
+    "sample_id": "bimil_seoyak_jaejik_p03",
+    "raw_text": "본 서식은 불특정 다수의 영업비밀 보유자(기업 또는 개인)가 활용함을 상정하여 작성된 표준서식으로서\n사용자의 개별적인 사정에 따라 수정 또는 변경하여 활용하여야 함.\n본 서식은 어떠한 번적 구속력도 없음\n위 서약한 사항을 위반할 경우 관련 법규에 의한 민·형사상 책임을 감수할 것을 서약합니다.\n(위 내용을 확인하고 이해하였으며, 이에 서명함)\n20\n서약자: 홍 길 동 (서명)\n주식회사 ABC 귀하",
+    "usage_raw": {
+      "requests": 1,
+      "field_count": 55,
+      "table_count": 0,
+      "infer_result": "SUCCESS",
+      "uid": "64110f6432ac4e10be1b49f6abe781bc"
+    },
+    "cost_usd": null,
+    "cost_krw": null,
+    "cost_confirmed": false,
+    "latency_ms": 2530,
+    "http_status": 200,
+    "error": null
+  }
+}

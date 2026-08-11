@@ -1,0 +1,24 @@
+{
+  "fingerprint": "82cc4cca8c66e7ed8e508e54d72fd7f9695469a0988ee9754005d936891feff6",
+  "image_sha256": "8a52a720c968943cba27e36dd140dce4c2ecfc755a46333711dd1f0ee65f0dc9",
+  "result": {
+    "engine_config_id": "claude_sonnet",
+    "sample_id": "jichul_p01",
+    "raw_text": "지 출 결 의 서\n\n문서번호\n제 호\t결\n재\t담 당\t\t팀 장\t\t센터장\n\t\t\t\n\n지출금액 일금        원정(￦        )\n\n발의일\t\t(인)\t지출예산항목\n\t\t\t단위사업\t\n지출일\t\t(인)\t예산항목\t\n\n내 역\n적요\t금액\n\t\n\n\n\t원\n\n\n\n\n지출처\t\t지출방법\t은행명\t\n\t\t\t예금주\t\n\t\t\t계좌번호\t\n영수\t상기금액을 영수함\n년 월 일\n영수인       (인)",
+    "usage_raw": {
+      "input_tokens": 4882,
+      "output_tokens": 161,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "stop_reason": "end_turn",
+      "model": "claude-sonnet-5",
+      "max_tokens": 32000
+    },
+    "cost_usd": 0.011374,
+    "cost_krw": 15.69612,
+    "cost_confirmed": true,
+    "latency_ms": 6828,
+    "http_status": 200,
+    "error": null
+  }
+}

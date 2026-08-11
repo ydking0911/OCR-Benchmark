@@ -1,0 +1,22 @@
+{
+  "fingerprint": "45f0895271c614b59878bc54a04ce44747d90cbad432387cfe3caacc8fdb940d",
+  "image_sha256": "8a52a720c968943cba27e36dd140dce4c2ecfc755a46333711dd1f0ee65f0dc9",
+  "result": {
+    "engine_config_id": "clova_text",
+    "sample_id": "jichul_p01",
+    "raw_text": "지 출 결 의 서\n문서번호\n담 당\n팀 장\n센터장\n재\n결\n제 호\n지출금액 일금\n원정( )\n지출예산항목\n발의일\n(인)\n단위사업\n지출일\n(인)\n예산항목\n내 역\n적요\n금액\n원\n은행명\n지출처\n지출방\n법\n예금주\n계좌번호\n영수\n상기금액을 영수함\n년 월 일\n영수인\n(인)",
+    "usage_raw": {
+      "requests": 1,
+      "field_count": 45,
+      "table_count": 0,
+      "infer_result": "SUCCESS",
+      "uid": "e494d8ffcba94d5f8e45c8384290ee1b"
+    },
+    "cost_usd": null,
+    "cost_krw": null,
+    "cost_confirmed": false,
+    "latency_ms": 2217,
+    "http_status": 200,
+    "error": null
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "fingerprint": "e4ca8019f218037ba42ad9be03556c82d5d79feb5e930e8e531c1f592ec7069c",
+  "image_sha256": "1d8d2d0579b4839ddc596b1bfe449de6d840e8a9dd940b0c3a48b0cfb76480f9",
+  "result": {
+    "engine_config_id": "upstage_standard",
+    "sample_id": "franchise_p48",
+    "raw_text": "별첨 [4] : 공급 물품 등의 내역\n| 연번 | 물품명 | 공급가격 |\n| --- | --- | --- |\n|  |  |  |\n\n| 본인은 본 페이지의 내용에 대한 설명을 듣고, 이를완전히 이해하였음 | (인) |\n| --- | --- |",
+    "table_htmls": [
+      "<table id='1' style='font-size:20px'><thead><tr><td>연번</td><td>물품명</td><td>공급가격</td></tr></thead><tbody><tr><td></td><td></td><td></td></tr></tbody></table>",
+      "<table id='2' style='font-size:14px'><thead></thead><tbody><tr><td>본인은 본 페이지의 내용에 대한 설명을 듣고, 이를완전히 이해하였음</td><td>(인)</td></tr></tbody></table>"
+    ],
+    "usage_raw": {
+      "pages": 1,
+      "model": "document-parse-260630",
+      "api": "2.0",
+      "element_count": 3
+    },
+    "cost_usd": 0.01,
+    "cost_krw": 13.8,
+    "cost_confirmed": true,
+    "latency_ms": 2390,
+    "http_status": 200,
+    "error": null
+  }
+}

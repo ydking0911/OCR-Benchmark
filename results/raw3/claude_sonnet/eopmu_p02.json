@@ -1,0 +1,24 @@
+{
+  "fingerprint": "89f9da4ff73bf96987410c0b63fd3856cb11313d30b65a862e511bf8b7f52bf8",
+  "image_sha256": "e09dc99d651829cf1888fce1c76d1a27287345c7fd06a69663b19465f51db135",
+  "result": {
+    "engine_config_id": "claude_sonnet",
+    "sample_id": "eopmu_p02",
+    "raw_text": "A(체결기관)　　　　　　　　　　　　　　　　　　　　　　　　　　B(상대기관)\n(체결권자)　　　　　　　　　　　　　　　　　　　　　　　　　　　(체결권자)\n(서명)　　　　　　　　　　　　　　　　　　　　　　　　　　　　　(서명)",
+    "usage_raw": {
+      "input_tokens": 4882,
+      "output_tokens": 120,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "stop_reason": "end_turn",
+      "model": "claude-sonnet-5",
+      "max_tokens": 32000
+    },
+    "cost_usd": 0.010964,
+    "cost_krw": 15.13032,
+    "cost_confirmed": true,
+    "latency_ms": 4110,
+    "http_status": 200,
+    "error": null
+  }
+}

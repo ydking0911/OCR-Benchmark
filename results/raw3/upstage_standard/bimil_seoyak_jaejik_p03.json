@@ -1,0 +1,21 @@
+{
+  "fingerprint": "bf634c16e136f367593818706215a0486cf92a97993fbcc61d008c6107a7dc4d",
+  "image_sha256": "7ca9d7f0ea4e737e70ea4e15f01adbf37ef4e73ea198e73a0cd0d3eee957ec9b",
+  "result": {
+    "engine_config_id": "upstage_standard",
+    "sample_id": "bimil_seoyak_jaejik_p03",
+    "raw_text": "※ 본 서식은 불특정 다수의 영업비밀 보유자(기업 또는 개인)가 활용함을 상정하여 작성된 표준서식으로서\n사용자의 개별적인 사정에 따라 수정 또는 변경하여 활용하여야 함.\n※ 본 서식은 어떠한 법적 구속력도 없을\n위 서약한 사항을 위반할 경우 관련 법규에 의한 민·형사상 책임을 감수할 것을 서약합니다.\n(위 내용을 확인하고 이해하였으며, 이에 서명함)\n20__.\n서약자: 홍 길 동 (서명)\n주식회사 ABC 귀하",
+    "usage_raw": {
+      "pages": 1,
+      "model": "document-parse-260630",
+      "api": "2.0",
+      "element_count": 5
+    },
+    "cost_usd": 0.01,
+    "cost_krw": 13.8,
+    "cost_confirmed": true,
+    "latency_ms": 2375,
+    "http_status": 200,
+    "error": null
+  }
+}

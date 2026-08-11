@@ -1,0 +1,22 @@
+{
+  "fingerprint": "d52b7121b369d7dfad73e8d1478dca7f408dd0c6ebd6226722fbf86f344113a3",
+  "image_sha256": "45d99e09026fe7eaaa8d027ab833838091aa6a7a19f5497a6344d6a15d80add4",
+  "result": {
+    "engine_config_id": "clova_text",
+    "sample_id": "bimil_gyeyak_p05",
+    "raw_text": "※ 본 서식은 불특정 다수의 영업비밀 보유자(기업 또는 개인)가 활용함을 상정하여 작성된 표준서식으로서\n사용자의 개별적인 사정에 따라 수정 또는 변경하여 활용하여야 함.\n본 서식은 어떠한 번적 구속력도 없음\n각각 서명(또는 기명날인)한 후 각자 1 부씩 보관한다.\n20 년\n월 일\n\"ABC\"\n(명칭)_\n(주소)_\n(대표자)\n(인)\n\"XYZ\"\n(명칭)_\n(주소)_\n(대표자)\n(인)",
+    "usage_raw": {
+      "requests": 1,
+      "field_count": 50,
+      "table_count": 0,
+      "infer_result": "SUCCESS",
+      "uid": "364780e0d0314941b01449c6f6b9c8c2"
+    },
+    "cost_usd": null,
+    "cost_krw": null,
+    "cost_confirmed": false,
+    "latency_ms": 1265,
+    "http_status": 200,
+    "error": null
+  }
+}

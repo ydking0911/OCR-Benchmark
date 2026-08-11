@@ -1,0 +1,360 @@
+{
+  "fingerprint": "f5ce96cf552828ffd820f6b56276850f574191e2314bb795fb713ccc0c2414a7",
+  "image_sha256": "8a52a720c968943cba27e36dd140dce4c2ecfc755a46333711dd1f0ee65f0dc9",
+  "result": {
+    "engine_config_id": "clova_table",
+    "sample_id": "jichul_p01",
+    "raw_text": "지 출 결 의 서\n문서번호\n담 당\n팀 장\n센터장\n재\n결\n제 호\n지출금액 일금\n원정( )\n지출예산항목\n발의일\n(인)\n단위사업\n지출일\n(인)\n예산항목\n내 역\n적요\n금액\n원\n은행명\n지출처\n지출방\n법\n예금주\n계좌번호\n영수\n상기금액을 영수함\n년 월 일\n영수인\n(인)",
+    "table_htmls": [
+      "<table><tbody><tr><td colspan=\"3\">문서번호</td><td>결</td><td colspan=\"3\">담 당</td><td colspan=\"3\">팀 장</td><td>센터장</td></tr><tr><td colspan=\"3\">제 호</td><td>재</td><td colspan=\"3\"></td><td colspan=\"3\"></td><td></td></tr><tr><td rowspan=\"2\" colspan=\"3\">지출금액 일금</td><td colspan=\"8\">원정( )</td></tr><tr><td colspan=\"8\"></td></tr><tr><td rowspan=\"2\">발의일</td><td rowspan=\"2\" colspan=\"2\"></td><td rowspan=\"2\" colspan=\"2\">(인)</td><td colspan=\"6\">지출예산항목</td></tr><tr><td rowspan=\"2\" colspan=\"3\">단위사업</td><td rowspan=\"2\" colspan=\"3\"></td></tr><tr><td rowspan=\"2\">지출일</td><td rowspan=\"2\" colspan=\"2\"></td><td rowspan=\"2\" colspan=\"2\">(인)</td></tr><tr><td colspan=\"3\">예산항목</td><td colspan=\"3\"></td></tr><tr><td></td><td colspan=\"2\"></td><td colspan=\"8\">내 역</td></tr><tr><td></td><td colspan=\"2\">적요</td><td colspan=\"6\"></td><td colspan=\"2\">금액</td></tr><tr><td></td><td colspan=\"2\"></td><td colspan=\"6\"></td><td colspan=\"2\">원</td></tr><tr><td rowspan=\"3\">지출처</td><td rowspan=\"3\"></td><td rowspan=\"3\">지출방 법</td><td rowspan=\"3\" colspan=\"3\"></td><td colspan=\"3\">은행명</td><td colspan=\"2\"></td></tr><tr><td colspan=\"3\">예금주</td><td colspan=\"2\"></td></tr><tr><td colspan=\"3\">계좌번호</td><td colspan=\"2\"></td></tr><tr><td>영수</td><td colspan=\"10\">상기금액을 영수함 년 월 일 영수인 (인)</td></tr></tbody></table>"
+    ],
+    "usage_raw": {
+      "requests": 1,
+      "field_count": 45,
+      "table_count": 1,
+      "infer_result": "SUCCESS",
+      "uid": "c1c039cf225d4d39a8c7ed48c297df54",
+      "tables_normalized": [
+        {
+          "cells": [
+            {
+              "rowIndex": 0,
+              "columnIndex": 0,
+              "rowSpan": 1,
+              "columnSpan": 3,
+              "text": "문서번호"
+            },
+            {
+              "rowIndex": 1,
+              "columnIndex": 0,
+              "rowSpan": 1,
+              "columnSpan": 3,
+              "text": "제 호"
+            },
+            {
+              "rowIndex": 2,
+              "columnIndex": 0,
+              "rowSpan": 2,
+              "columnSpan": 3,
+              "text": "지출금액 일금"
+            },
+            {
+              "rowIndex": 4,
+              "columnIndex": 0,
+              "rowSpan": 2,
+              "columnSpan": 1,
+              "text": "발의일"
+            },
+            {
+              "rowIndex": 6,
+              "columnIndex": 0,
+              "rowSpan": 2,
+              "columnSpan": 1,
+              "text": "지출일"
+            },
+            {
+              "rowIndex": 8,
+              "columnIndex": 0,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 9,
+              "columnIndex": 0,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 10,
+              "columnIndex": 0,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 11,
+              "columnIndex": 0,
+              "rowSpan": 3,
+              "columnSpan": 1,
+              "text": "지출처"
+            },
+            {
+              "rowIndex": 14,
+              "columnIndex": 0,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": "영수"
+            },
+            {
+              "rowIndex": 4,
+              "columnIndex": 1,
+              "rowSpan": 2,
+              "columnSpan": 2,
+              "text": ""
+            },
+            {
+              "rowIndex": 6,
+              "columnIndex": 1,
+              "rowSpan": 2,
+              "columnSpan": 2,
+              "text": ""
+            },
+            {
+              "rowIndex": 8,
+              "columnIndex": 1,
+              "rowSpan": 1,
+              "columnSpan": 2,
+              "text": ""
+            },
+            {
+              "rowIndex": 9,
+              "columnIndex": 1,
+              "rowSpan": 1,
+              "columnSpan": 2,
+              "text": "적요"
+            },
+            {
+              "rowIndex": 10,
+              "columnIndex": 1,
+              "rowSpan": 1,
+              "columnSpan": 2,
+              "text": ""
+            },
+            {
+              "rowIndex": 11,
+              "columnIndex": 1,
+              "rowSpan": 3,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 14,
+              "columnIndex": 1,
+              "rowSpan": 1,
+              "columnSpan": 10,
+              "text": "상기금액을 영수함 년 월 일 영수인 (인)"
+            },
+            {
+              "rowIndex": 11,
+              "columnIndex": 2,
+              "rowSpan": 3,
+              "columnSpan": 1,
+              "text": "지출방 법"
+            },
+            {
+              "rowIndex": 0,
+              "columnIndex": 3,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": "결"
+            },
+            {
+              "rowIndex": 1,
+              "columnIndex": 3,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": "재"
+            },
+            {
+              "rowIndex": 2,
+              "columnIndex": 3,
+              "rowSpan": 1,
+              "columnSpan": 8,
+              "text": "원정( )"
+            },
+            {
+              "rowIndex": 3,
+              "columnIndex": 3,
+              "rowSpan": 1,
+              "columnSpan": 8,
+              "text": ""
+            },
+            {
+              "rowIndex": 4,
+              "columnIndex": 3,
+              "rowSpan": 2,
+              "columnSpan": 2,
+              "text": "(인)"
+            },
+            {
+              "rowIndex": 6,
+              "columnIndex": 3,
+              "rowSpan": 2,
+              "columnSpan": 2,
+              "text": "(인)"
+            },
+            {
+              "rowIndex": 8,
+              "columnIndex": 3,
+              "rowSpan": 1,
+              "columnSpan": 8,
+              "text": "내 역"
+            },
+            {
+              "rowIndex": 9,
+              "columnIndex": 3,
+              "rowSpan": 1,
+              "columnSpan": 6,
+              "text": ""
+            },
+            {
+              "rowIndex": 10,
+              "columnIndex": 3,
+              "rowSpan": 1,
+              "columnSpan": 6,
+              "text": ""
+            },
+            {
+              "rowIndex": 11,
+              "columnIndex": 3,
+              "rowSpan": 3,
+              "columnSpan": 3,
+              "text": ""
+            },
+            {
+              "rowIndex": 0,
+              "columnIndex": 4,
+              "rowSpan": 1,
+              "columnSpan": 3,
+              "text": "담 당"
+            },
+            {
+              "rowIndex": 1,
+              "columnIndex": 4,
+              "rowSpan": 1,
+              "columnSpan": 3,
+              "text": ""
+            },
+            {
+              "rowIndex": 4,
+              "columnIndex": 5,
+              "rowSpan": 1,
+              "columnSpan": 6,
+              "text": "지출예산항목"
+            },
+            {
+              "rowIndex": 5,
+              "columnIndex": 5,
+              "rowSpan": 2,
+              "columnSpan": 3,
+              "text": "단위사업"
+            },
+            {
+              "rowIndex": 7,
+              "columnIndex": 5,
+              "rowSpan": 1,
+              "columnSpan": 3,
+              "text": "예산항목"
+            },
+            {
+              "rowIndex": 11,
+              "columnIndex": 6,
+              "rowSpan": 1,
+              "columnSpan": 3,
+              "text": "은행명"
+            },
+            {
+              "rowIndex": 12,
+              "columnIndex": 6,
+              "rowSpan": 1,
+              "columnSpan": 3,
+              "text": "예금주"
+            },
+            {
+              "rowIndex": 13,
+              "columnIndex": 6,
+              "rowSpan": 1,
+              "columnSpan": 3,
+              "text": "계좌번호"
+            },
+            {
+              "rowIndex": 0,
+              "columnIndex": 7,
+              "rowSpan": 1,
+              "columnSpan": 3,
+              "text": "팀 장"
+            },
+            {
+              "rowIndex": 1,
+              "columnIndex": 7,
+              "rowSpan": 1,
+              "columnSpan": 3,
+              "text": ""
+            },
+            {
+              "rowIndex": 5,
+              "columnIndex": 8,
+              "rowSpan": 2,
+              "columnSpan": 3,
+              "text": ""
+            },
+            {
+              "rowIndex": 7,
+              "columnIndex": 8,
+              "rowSpan": 1,
+              "columnSpan": 3,
+              "text": ""
+            },
+            {
+              "rowIndex": 9,
+              "columnIndex": 9,
+              "rowSpan": 1,
+              "columnSpan": 2,
+              "text": "금액"
+            },
+            {
+              "rowIndex": 10,
+              "columnIndex": 9,
+              "rowSpan": 1,
+              "columnSpan": 2,
+              "text": "원"
+            },
+            {
+              "rowIndex": 11,
+              "columnIndex": 9,
+              "rowSpan": 1,
+              "columnSpan": 2,
+              "text": ""
+            },
+            {
+              "rowIndex": 12,
+              "columnIndex": 9,
+              "rowSpan": 1,
+              "columnSpan": 2,
+              "text": ""
+            },
+            {
+              "rowIndex": 13,
+              "columnIndex": 9,
+              "rowSpan": 1,
+              "columnSpan": 2,
+              "text": ""
+            },
+            {
+              "rowIndex": 0,
+              "columnIndex": 10,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": "센터장"
+            },
+            {
+              "rowIndex": 1,
+              "columnIndex": 10,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            }
+          ]
+        }
+      ]
+    },
+    "cost_usd": 0.018115942028985508,
+    "cost_krw": 25,
+    "cost_confirmed": true,
+    "latency_ms": 1905,
+    "http_status": 200,
+    "error": null
+  }
+}

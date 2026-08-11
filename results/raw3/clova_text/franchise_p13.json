@@ -1,0 +1,22 @@
+{
+  "fingerprint": "e0d8a6de8f764ec83052f7ed7770f9b8aaa29213505224c61ab0f6c041845590",
+  "image_sha256": "f07bd490d5a2db6c596d39703f2031e51b6183797fc0021954bea071851743d7",
+  "result": {
+    "engine_config_id": "clova_text",
+    "sample_id": "franchise_p13",
+    "raw_text": "매뉴얼 제공비,\n오픈지원비 등\n최초교육비\n합계\n② 가맹점사업자는 가맹점 영업이 개시되거나 계약체결일로부터 ( )일이 경과할\n때까지 제 1 항의 최초가맹금 중 다음 표에 기재된 내역을 가맹본부가 지정하는\n아래 금융회사에 예치하여야 한다. 다만, 가맹본부가 제 14 조의 가맹점사업자\n피해보상보험 등을 체결한 경우에는 가맹본부가 직접 지급받을 수 있다.\n예치가맹금 내역\n금액(단위: 천원)\n가입비\n최초교육비\n합계\n* 예치금융회사:\n은행\n지점\n부\n계좌번호:\n예금주:\n③ 가맹본부는 다음 각 호의 어느 하나에 해당하는 경우에 위 예치기관의 장에게\n예치가맹금의 지급을 요청할 수 있다.\n1. 가맹점사업자가 영업을 개시한 경우\n2. 가맹계약 체결일로부터 2 개월이 경과한 경우\n제 16 조 [가맹금의 반환]\n본인은 본 페이지의 내용에 대한 설명을\n듣고, 이를 완전히 이해하였음\n(인)",
+    "usage_raw": {
+      "requests": 1,
+      "field_count": 105,
+      "table_count": 0,
+      "infer_result": "SUCCESS",
+      "uid": "efd8b63c42b84fe59ea0efc840224bb7"
+    },
+    "cost_usd": null,
+    "cost_krw": null,
+    "cost_confirmed": false,
+    "latency_ms": 1375,
+    "http_status": 200,
+    "error": null
+  }
+}

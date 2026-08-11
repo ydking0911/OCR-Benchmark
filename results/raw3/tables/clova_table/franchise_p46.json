@@ -1,0 +1,141 @@
+{
+  "fingerprint": "8022b5e25fa4dac0d2af724f518580c4d5cd213b5a7bc08419768e4cbd53440f",
+  "image_sha256": "a070ea3e8e42cfc47580a8f6c7471b602008132e64417c4c9d820606f206d631",
+  "result": {
+    "engine_config_id": "clova_table",
+    "sample_id": "franchise_p46",
+    "raw_text": "별첨 [2] : 가맹점사업자에게 사용이 허가된 영업표지의 표시\n(1) 허용대상 영업표지\n영업표지 견본\n등록번호(출원번호)\n등록결정(심결) 연월일\n존속기간 (예정) 만료일\n지정상품 또는 지정서비스업\n등록권리자\n(2) 영업표지 사용방법 : 간판, 상징물, 홍보물, 집기 비품, 문구류 등에 표시\n(3) 영업표지의 사용기간 : 이 계약의 효력이 존속되는 기간과 원칙적으로 동일함\n(4) 영업표지의 사용지역 : 별도 약정이 없는 한 해당 영업지역 내로 한정됨\n본인은 본 페이지의 내용에 대한 설명을\n듣고, 이를 완전히 이해하였음\n(인)",
+    "table_htmls": [
+      "<table><tbody><tr><td>영업표지 견본</td><td></td></tr><tr><td>등록번호(출원번호)</td><td></td></tr><tr><td>등록결정(심결) 연월일</td><td></td></tr><tr><td>존속기간 (예정) 만료일</td><td></td></tr><tr><td>지정상품 또는 지정서비스업</td><td></td></tr><tr><td>등록권리자</td><td></td></tr></tbody></table>",
+      "<table><tbody><tr><td>본인은 본 페이지의 내용에 대한 설명을 듣고, 이를 완전히 이해하였음</td><td rowspan=\"2\">(인)</td></tr><tr><td></td></tr></tbody></table>"
+    ],
+    "usage_raw": {
+      "requests": 1,
+      "field_count": 69,
+      "table_count": 2,
+      "infer_result": "SUCCESS",
+      "uid": "2c3e7b5961d0485aadc8e312d37fac19",
+      "tables_normalized": [
+        {
+          "cells": [
+            {
+              "rowIndex": 0,
+              "columnIndex": 0,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": "영업표지 견본"
+            },
+            {
+              "rowIndex": 1,
+              "columnIndex": 0,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": "등록번호(출원번호)"
+            },
+            {
+              "rowIndex": 2,
+              "columnIndex": 0,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": "등록결정(심결) 연월일"
+            },
+            {
+              "rowIndex": 3,
+              "columnIndex": 0,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": "존속기간 (예정) 만료일"
+            },
+            {
+              "rowIndex": 4,
+              "columnIndex": 0,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": "지정상품 또는 지정서비스업"
+            },
+            {
+              "rowIndex": 5,
+              "columnIndex": 0,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": "등록권리자"
+            },
+            {
+              "rowIndex": 0,
+              "columnIndex": 1,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 1,
+              "columnIndex": 1,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 2,
+              "columnIndex": 1,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 3,
+              "columnIndex": 1,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 4,
+              "columnIndex": 1,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 5,
+              "columnIndex": 1,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            }
+          ]
+        },
+        {
+          "cells": [
+            {
+              "rowIndex": 0,
+              "columnIndex": 0,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": "본인은 본 페이지의 내용에 대한 설명을 듣고, 이를 완전히 이해하였음"
+            },
+            {
+              "rowIndex": 1,
+              "columnIndex": 0,
+              "rowSpan": 1,
+              "columnSpan": 1,
+              "text": ""
+            },
+            {
+              "rowIndex": 0,
+              "columnIndex": 1,
+              "rowSpan": 2,
+              "columnSpan": 1,
+              "text": "(인)"
+            }
+          ]
+        }
+      ]
+    },
+    "cost_usd": 0.018115942028985508,
+    "cost_krw": 25,
+    "cost_confirmed": true,
+    "latency_ms": 1655,
+    "http_status": 200,
+    "error": null
+  }
+}

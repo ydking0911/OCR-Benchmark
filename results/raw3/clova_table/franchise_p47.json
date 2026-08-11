@@ -1,0 +1,22 @@
+{
+  "fingerprint": "f21cebaaeb487ddd6dd16488e6acbf58c3c944d60813f6beb8d457c49d0cc5e6",
+  "image_sha256": "3a4c13b2730302dfb4f5828e715dd64e97edc111bfd5157f00f1fa524284e80c",
+  "result": {
+    "engine_config_id": "clova_table",
+    "sample_id": "franchise_p47",
+    "raw_text": "별첨 [3] : 공급 기기 등의 내역\n연번\n기기명\n공급가격\n본인은 본 페이지의 내용에 대한 설명을\n듣고, 이를 완전히 이해하였음\n(인)",
+    "usage_raw": {
+      "requests": 1,
+      "field_count": 21,
+      "table_count": 2,
+      "infer_result": "SUCCESS",
+      "uid": "ec8d049716f5405488bfd2a79142f8f9"
+    },
+    "cost_usd": null,
+    "cost_krw": null,
+    "cost_confirmed": false,
+    "latency_ms": 1671,
+    "http_status": 200,
+    "error": null
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "fingerprint": "ee72ec74e9cd07b64ac4ec1f607200a605fe83ecd0c020c5c2ce573d4e15d40a",
+  "image_sha256": "92455e38e1a607285c1e0e9b3fbdb613cc635296c4c336ef49dbed741ad9d621",
+  "result": {
+    "engine_config_id": "claude_sonnet",
+    "sample_id": "franchise_p45",
+    "raw_text": "별첨 [1] : 영업지역의 표시\n\n※ 영업지역을 표시한 지도를 첨부하여 주십시오\n\n본인은 본 페이지의 내용에 대한 설명을 듣고, 이를완전히 이해하였음\n(인)",
+    "usage_raw": {
+      "input_tokens": 4882,
+      "output_tokens": 90,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "stop_reason": "end_turn",
+      "model": "claude-sonnet-5",
+      "max_tokens": 32000
+    },
+    "cost_usd": 0.010664,
+    "cost_krw": 14.71632,
+    "cost_confirmed": true,
+    "latency_ms": 3719,
+    "http_status": 200,
+    "error": null
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "fingerprint": "ccbd5c8274e4b10349ba3faf583d429ce04481f04a2aa334e62d2cbd31a8d2e3",
+  "image_sha256": "9b10ef164fe1690083cbb01d5015f993ad2205c71ed7f8c99656e5d1c5feca70",
+  "result": {
+    "engine_config_id": "upstage_standard",
+    "sample_id": "franchise_p43",
+    "raw_text": "매출에 대하여 (제공받았음, 제공받은 사실이 없음)을 확인합니다.\n(인)\n② 위 제 1 항에서 가맹본부 혹은 가맹본부의 직원으로 제공받은 장래의\n예상매출액은 월매출(일매출) 원으로서 본 계약서에 첨부된\n예상매출액 자료와 같습니다.\n별첨 [1] : 영업지역의 표시\n별첨 [2] : 가맹점사업자에게 사용이 허가된 영업표지의 표시\n별첨 [3] : 공급 기기 등의 내역\n별첨 [4] : 공급 물품 등의 내역\n가맹본부와 가맹점사업자는 이 가맹계약서에 열거된 각 조항을 면밀히 검토하고\n충분히 이해하였으며, 이 계약의 체결을 증명하기 위하여 계약서 2 통을 작성하여\n각각 기명 · 날인한 후 각 1 통씩 보관한다.\n20 년 월 일\n[가맹본부]\n대 표 자: (인)\n| 본인은 본 페이지의 내용에 대한 설명을 듣고, 이를완전히 이해하였음 | (인) |\n| --- | --- |",
+    "usage_raw": {
+      "pages": 1,
+      "model": "document-parse-260630",
+      "api": "2.0",
+      "element_count": 9
+    },
+    "cost_usd": 0.01,
+    "cost_krw": 13.8,
+    "cost_confirmed": true,
+    "latency_ms": 2375,
+    "http_status": 200,
+    "error": null
+  }
+}

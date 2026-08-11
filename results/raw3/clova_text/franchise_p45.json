@@ -1,0 +1,22 @@
+{
+  "fingerprint": "1d44939736ad22f5eca2d29fcc641c9f8748afa5b1f4b89f4d46875e78ecdbde",
+  "image_sha256": "92455e38e1a607285c1e0e9b3fbdb613cc635296c4c336ef49dbed741ad9d621",
+  "result": {
+    "engine_config_id": "clova_text",
+    "sample_id": "franchise_p45",
+    "raw_text": "별첨 [1] : 영업지역의 표시\n※ 영업지역을 표시한 지도를 첨부하여 주십시오\n본인은 본 페이지의 내용에 대한 설명을\n듣고, 이를 완전히 이해하였음\n(인)",
+    "usage_raw": {
+      "requests": 1,
+      "field_count": 22,
+      "table_count": 0,
+      "infer_result": "SUCCESS",
+      "uid": "d206ac9eeb1f4026a8f678853b95fdee"
+    },
+    "cost_usd": null,
+    "cost_krw": null,
+    "cost_confirmed": false,
+    "latency_ms": 2094,
+    "http_status": 200,
+    "error": null
+  }
+}

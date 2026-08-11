@@ -1,0 +1,22 @@
+{
+  "fingerprint": "11791e7038fc296ff3a1344f347c13a06a15d45106ccd8fc04fe1c745c884cc0",
+  "image_sha256": "e09dc99d651829cf1888fce1c76d1a27287345c7fd06a69663b19465f51db135",
+  "result": {
+    "engine_config_id": "clova_table",
+    "sample_id": "eopmu_p02",
+    "raw_text": "A(체결기관)\nB(상대기관)\n(체결권자)\n(서명)\n(체결권자)\n(서명)",
+    "usage_raw": {
+      "requests": 1,
+      "field_count": 6,
+      "table_count": 0,
+      "infer_result": "SUCCESS",
+      "uid": "dfce95574f814d4a9f33211ce5ebc0d9"
+    },
+    "cost_usd": null,
+    "cost_krw": null,
+    "cost_confirmed": false,
+    "latency_ms": 1467,
+    "http_status": 200,
+    "error": null
+  }
+}

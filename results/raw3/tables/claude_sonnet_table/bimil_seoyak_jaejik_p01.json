@@ -1,0 +1,27 @@
+{
+  "fingerprint": "e34baa2ba9fa369b69506b9d79c6c1cc8fba3ffec12c0d1cb712c51a98fe4aa6",
+  "image_sha256": "79fb5d7dc5428b667877a3bb150aa568c89184928a28e73e270e92654cd49e5e",
+  "result": {
+    "engine_config_id": "claude_sonnet_table",
+    "sample_id": "bimil_seoyak_jaejik_p01",
+    "raw_text": "<table>\n<thead>\n<tr><th>구분</th><th>영업비밀/영업자산의 명칭</th><th>영업비밀/영업자산의 설명</th></tr>\n</thead>\n<tbody>\n<tr><td>1</td><td></td><td></td></tr>\n<tr><td>2</td><td></td><td></td></tr>\n<tr><td>3</td><td></td><td></td></tr>\n<tr><td>4</td><td></td><td></td></tr>\n</tbody>\n</table>",
+    "table_htmls": [
+      "<table>\n<thead>\n<tr><th>구분</th><th>영업비밀/영업자산의 명칭</th><th>영업비밀/영업자산의 설명</th></tr>\n</thead>\n<tbody>\n<tr><td>1</td><td></td><td></td></tr>\n<tr><td>2</td><td></td><td></td></tr>\n<tr><td>3</td><td></td><td></td></tr>\n<tr><td>4</td><td></td><td></td></tr>\n</tbody>\n</table>"
+    ],
+    "usage_raw": {
+      "input_tokens": 5190,
+      "output_tokens": 173,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "stop_reason": "end_turn",
+      "model": "claude-sonnet-5",
+      "max_tokens": 32000
+    },
+    "cost_usd": 0.01211,
+    "cost_krw": 16.7118,
+    "cost_confirmed": true,
+    "latency_ms": 4282,
+    "http_status": 200,
+    "error": null
+  }
+}
