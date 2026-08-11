@@ -217,6 +217,7 @@ def aggregate(
         "pricing": {
             "upstage": config.UPSTAGE_PRICING,
             "clova": config.CLOVA_PRICING,
+            "mistral": config.MISTRAL_PRICING,
             "claude": config.CLAUDE_PRICING,
             "claude_post_expiry": config.CLAUDE_PRICING_POST_EXPIRY,
             "usd_krw_rate": config.USD_KRW_RATE,

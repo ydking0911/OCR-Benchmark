@@ -34,6 +34,8 @@ def aggregated(tmp_path):
                 if engine.startswith("clova")
                 else {"input_tokens": 4784, "output_tokens": 900}
                 if engine == "claude_sonnet"
+                else {"pages_processed": 1}
+                if engine == "mistral_ocr"
                 else {"pages": 1}
             )
             result = EngineResult(
@@ -218,11 +220,13 @@ def test_write_creates_the_file(aggregated, tmp_path):
 
 @pytest.fixture
 def with_tables(tmp_path):
-    """Same corpus as `aggregated`, plus table results for three engines.
+    """Same corpus as `aggregated`, plus table results for four engines.
 
     `upstage_standard` is perfect, `clova_table` returns a bare cell grid (no
-    header markup, which is all General OCR can do), and `claude_sonnet_table`
-    finds nothing at all.
+    header markup, which is all General OCR can do), `mistral_ocr` is perfect
+    under its own config id (its table call is the same endpoint with
+    `table_format=html`, so it needs no table-only twin), and
+    `claude_sonnet_table` finds nothing at all.
     """
     gt_dir = tmp_path / "gt"
     gt_dir.mkdir()
@@ -237,14 +241,19 @@ def with_tables(tmp_path):
             "ground_truth_path": str(gt_dir / f"{sid}.txt"),
         }
     ]
+    text_usage = {
+        "upstage_standard": {"pages": 1},
+        "clova_table": {"requests": 1},
+        "mistral_ocr": {"pages_processed": 1},
+    }
     text_results = [
         EngineResult(
             engine_config_id=engine,
             sample_id=sid,
             raw_text=REFERENCE,
-            usage_raw={"requests": 1} if engine.startswith("clova") else {"pages": 1},
+            usage_raw=usage,
         )
-        for engine in ("upstage_standard", "clova_table")
+        for engine, usage in text_usage.items()
     ]
 
     grid = [
@@ -266,6 +275,12 @@ def with_tables(tmp_path):
             sample_id=sid,
             table_htmls=grid,
             usage_raw={"requests": 1},
+        ),
+        EngineResult(
+            engine_config_id="mistral_ocr",
+            sample_id=sid,
+            table_htmls=TABLE_GROUND_TRUTH[sid],
+            usage_raw={"pages_processed": 1},
         ),
         EngineResult(
             engine_config_id=config.CLAUDE_TABLE_ENGINE_CONFIG_ID,
@@ -341,6 +356,33 @@ def test_table_section_declares_its_narrower_scope(with_tables):
     markdown = report3.render(with_tables)
     assert "전체 65페이지 텍스트 채점과 범위가 다름" in markdown
     assert "1절 표와 직접 비교하지 마십시오" in markdown
+
+
+def test_a_fifth_engine_reaches_every_section_without_a_per_section_patch(with_tables):
+    """`mistral_ocr` is only ever registered in config — no section names it.
+
+    Each section derives its rows from `aggregated["engines"]` or
+    `aggregated["tables"]["engines"]`, so this is the guard that a sixth engine
+    added later also needs nothing but a registry entry.
+    """
+    markdown = report3.render(with_tables)
+    label = config.ENGINE_CONFIGS["mistral_ocr"]["label"]
+
+    # 1. Price table. Asserted on the rows rather than the section text, which
+    # also carries the pricing-source line and would match trivially.
+    price_rows = report3.build_comparison_table(with_tables["engines"])[2:]
+    assert any(label in row for row in price_rows)
+
+    features = markdown.split("## 2. 기능 제공 비교")[1].split("## 3.")[0]
+    per_document = markdown.split("## 3. 문서별")[1].split("## 4.")[0]
+    reference_ratio = markdown.split("## 4. 참고 지표")[1].split("## 5.")[0]
+    table_section = markdown.split("## 7. 표 구조 정확도")[1]
+    for section in (features, per_document, reference_ratio, table_section):
+        assert label in section
+
+    # 7.1's column headers are config ids, not labels.
+    assert "mistral_ocr" in table_section.split("### 7.1")[1]
+    assert config.MISTRAL_PRICING["source_url"] in markdown
 
 
 def test_table_section_introduces_no_pass_fail_gate(with_tables):

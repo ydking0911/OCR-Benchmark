@@ -209,11 +209,18 @@ def test_pricing_provenance_reflects_unconfirmed_when_price_is_unknown(corpus, m
 
 
 def table_result(engine, sample_id, htmls=None, **kwargs):
+    usage = (
+        {"pages": 1}
+        if engine.startswith("upstage")
+        else {"pages_processed": 1}
+        if engine == "mistral_ocr"
+        else {"requests": 1}
+    )
     return EngineResult(
         engine_config_id=engine,
         sample_id=sample_id,
         table_htmls=TABLE_GROUND_TRUTH[sample_id] if htmls is None else htmls,
-        usage_raw={"pages": 1} if engine.startswith("upstage") else {"requests": 1},
+        usage_raw=usage,
         **kwargs,
     )
 
@@ -345,6 +352,33 @@ def test_header_agnostic_scoring_does_not_penalize_a_bare_cell_grid(corpus):
 
     assert summary["teds_mean"] < 1.0
     assert summary["teds_header_agnostic_mean"] == 1.0
+
+
+def test_a_fifth_engine_is_aggregated_from_the_registry_alone(corpus):
+    """Registering `mistral_ocr` is the whole integration — no code path names it.
+
+    Both pipelines derive their engine list from the results handed to them
+    (text) or from `TABLE_CAPABLE_ENGINE_CONFIGS` (tables), so a sixth engine
+    later should need no further patching here either.
+    """
+    entries, gt_dir = corpus
+    out = aggregate3.aggregate(
+        make_results("mistral_ocr", entries, usage={"pages_processed": 1}),
+        entries,
+        gt_dir,
+        perfect_table_results("mistral_ocr"),
+    )
+
+    summary = out["engines"]["mistral_ocr"]
+    assert summary["label"] == config.ENGINE_CONFIGS["mistral_ocr"]["label"]
+    assert summary["cost"]["confirmed"] is True
+    assert summary["cost"]["per_page_usd"] == pytest.approx(0.004)
+    assert summary["cost"]["per_10k_pages_usd"] == pytest.approx(40.0)
+    assert out["pricing"]["mistral"]["source_url"]
+
+    # Same config id serves the table pipeline, unlike Claude's separate one.
+    assert out["tables"]["engines"]["mistral_ocr"]["teds_mean"] == 1.0
+    assert out["tables"]["engines"]["mistral_ocr"]["n_pages"] == len(TABLE_GROUND_TRUTH)
 
 
 def test_table_aggregation_computes_no_gate_or_pass_rate(corpus):

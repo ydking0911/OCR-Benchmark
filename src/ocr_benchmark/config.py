@@ -134,12 +134,30 @@ CLAUDE_PRICING_POST_EXPIRY = {
     "retrieved_at": "2026-08-11",
 }
 
+# Mistral OCR 4. Confirmed on the public announcement page: $4 per 1,000 pages
+# on the synchronous API, which is the only mode this harness uses.
+MISTRAL_PRICING = {
+    "usd_per_page": 0.004,
+    "source_url": "https://mistral.ai/news/ocr-4",
+    "retrieved_at": "2026-08-11",
+    "notes": (
+        "동기 API 기준 $4/1,000페이지. Batch API는 $2/1,000페이지(50% 할인)이지만 "
+        "이 하네스는 페이지 단위 동기 호출만 하므로 적용되지 않는다(Claude의 Batch "
+        "할인을 쓰지 않는 것과 동일한 이유). VAT 포함 여부는 미확인."
+    ),
+}
+
 # Used only to render a single-currency column in the report. Not a measured
 # cost — the authoritative per-engine figures stay in their native currency.
 USD_KRW_RATE = 1380.0
 USD_KRW_RATE_AS_OF = "2026-08-11"
 
 # --- Engine configurations -------------------------------------------------
+
+# Version-pinned, not `mistral-ocr-latest`: every other engine here is pinned
+# too, because a silently rotated model would invalidate cached results without
+# invalidating the cache.
+MISTRAL_MODEL = "mistral-ocr-4-0"
 
 CLAUDE_MODEL = "claude-sonnet-5"
 CLAUDE_MAX_TOKENS = 32000
@@ -183,9 +201,15 @@ ENGINE_CONFIGS: dict[str, dict[str, Any]] = {
         "model": CLAUDE_MODEL,
         "currency": "USD",
     },
+    "mistral_ocr": {
+        "engine": "mistral",
+        "label": "Mistral OCR 4",
+        "model": MISTRAL_MODEL,
+        "currency": "USD",
+    },
 }
 
-ENGINE_FAMILIES = {"upstage", "clova", "claude"}
+ENGINE_FAMILIES = {"upstage", "clova", "claude", "mistral"}
 
 # --- Table-structure (TEDS) scoring ----------------------------------------
 
@@ -221,10 +245,16 @@ TABLE_ONLY_ENGINE_CONFIGS: dict[str, dict[str, Any]] = {
 
 # Configs that can return table structure at all. `clova_text` is excluded
 # because it never requests table detection, so it has nothing to score.
+#
+# `mistral_ocr` appears under its own id rather than a table-only twin: table
+# extraction there is a parameter on the same endpoint and the same model, so
+# the text run and the table run share one config (closer to Upstage than to
+# Claude, which needs a wholly separate prompt and therefore its own id).
 TABLE_CAPABLE_ENGINE_CONFIGS: tuple[str, ...] = (
     "upstage_standard",
     "upstage_enhanced",
     "clova_table",
+    "mistral_ocr",
     CLAUDE_TABLE_ENGINE_CONFIG_ID,
 )
 
@@ -243,6 +273,12 @@ FEATURE_CHECKLIST: dict[str, dict[str, str]] = {
     "clova_text": {"bbox": "○", "clause_hierarchy": "✕", "checkbox": "✕", "deterministic": "○"},
     "clova_table": {"bbox": "○", "clause_hierarchy": "△(표 구조만)", "checkbox": "✕(Template 전용)", "deterministic": "○"},
     "claude_sonnet": {"bbox": "△(근사값)", "clause_hierarchy": "△(텍스트로만)", "checkbox": "△", "deterministic": "✕"},
+    # Mistral OCR 4 is a dedicated OCR model, not a sampled chat completion, so
+    # it gets Upstage/CLOVA's "○" for determinism rather than Claude's "✕".
+    # Structure comes back as markdown (plus separated tables when asked), so
+    # clause hierarchy is text-only in the same sense Claude's is, and there is
+    # no documented first-class checkbox output.
+    "mistral_ocr": {"bbox": "○", "clause_hierarchy": "△(텍스트로만)", "checkbox": "△", "deterministic": "○"},
 }
 
 
@@ -271,6 +307,11 @@ def compute_cost(engine_config_id: str, usage_raw: dict[str, Any] | None) -> dic
         if cfg["enable_table_detection"] and CLOVA_PRICING["table_krw_per_request"]:
             krw += CLOVA_PRICING["table_krw_per_request"]
         return {"cost_usd": krw / USD_KRW_RATE, "cost_krw": krw, "cost_confirmed": True}
+
+    if engine == "mistral":
+        pages = usage.get("pages_processed") or 1
+        usd = pages * MISTRAL_PRICING["usd_per_page"]
+        return {"cost_usd": usd, "cost_krw": usd * USD_KRW_RATE, "cost_confirmed": True}
 
     if engine == "claude":
         rates = CLAUDE_PRICING[cfg["model"]]

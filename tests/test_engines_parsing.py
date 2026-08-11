@@ -4,6 +4,9 @@ Fixtures mirror the real response shapes confirmed 2026-08-11:
   - Upstage Document Parse: console.upstage.ai/api/document-digitization
   - CLOVA General OCR V2:   api.ncloud-docs.com/docs/en/ai-application-service-ocr-ocr
   - Anthropic Messages:     content blocks + usage
+  - Mistral OCR 4:          mistral.ai/news/ocr-4 (top-level shape confirmed;
+                            the per-table object layout is a documented guess,
+                            see the Mistral section below)
 """
 
 import pytest
@@ -13,6 +16,7 @@ from ocr_benchmark.engines import (
     claude_client,
     claude_table_client,
     clova_client,
+    mistral_client,
     upstage_client,
 )
 from ocr_benchmark.engines.base import EngineResult, apply_cost
@@ -598,6 +602,260 @@ def test_claude_api_exception_is_caught_not_raised(tmp_path):
     assert result.raw_text == ""
 
 
+# --- Mistral ---------------------------------------------------------------
+
+# Default call: `table_format` is omitted, so tables stay inline in the page
+# markdown as markdown table syntax. That inline form is deliberately what
+# CER/WER measures — see mistral_client's module docstring.
+MISTRAL_RESPONSE = {
+    "pages": [
+        {
+            "index": 0,
+            "markdown": (
+                "# 비밀유지계약서\n\n제1조(목적)\n\n"
+                "| 연번 | 기기명 |\n| --- | --- |\n| 1 |  |"
+            ),
+            "tables": [],
+            "images": [],
+            "dimensions": {"dpi": 200, "height": 2576, "width": 1822},
+        }
+    ],
+    "model": "mistral-ocr-4-0",
+    "usage_info": {"pages_processed": 1, "doc_size_bytes": 184213},
+}
+
+# `table_format="html"` call: tables move out of the markdown, which keeps only
+# a `[tbl-N.html](tbl-N.html)` link where each table was.
+#
+# Shape confirmed 2026-08-11 against a live response (jichul_p01, cached at
+# results/raw3/tables/mistral_ocr/jichul_p01.json): each entry is
+# `{"id", "content": "<table>...</table>", "format": "html",
+# "word_confidence_scores"}`. The pre-live-call guess used a top-level `"html"`
+# key instead of `"content"` and scored every table-page 0 despite `tables[]`
+# being populated — the two tests after this one pin the fallbacks that were
+# added once that mismatch was found, so a future rename degrades instead of
+# silently zeroing every page again.
+MISTRAL_TABLE_RESPONSE = {
+    "pages": [
+        {
+            "index": 0,
+            "markdown": "# 별첨 [3]: 공급 기기 등의 내역\n\n[tbl-0.html](tbl-0.html)",
+            "tables": [
+                {
+                    "id": "tbl-0.html",
+                    "content": UPSTAGE_TABLE_HTML,
+                    "format": "html",
+                    "word_confidence_scores": None,
+                }
+            ],
+            "images": [],
+        }
+    ],
+    "model": "mistral-ocr-4-0",
+    "usage_info": {"pages_processed": 1, "doc_size_bytes": 184213},
+}
+
+
+def test_mistral_parses_page_markdown_and_usage():
+    text, usage = mistral_client.parse_response(MISTRAL_RESPONSE)
+    assert text.startswith("# 비밀유지계약서")
+    assert "| 연번 | 기기명 |" in text  # inline table, not a placeholder
+    assert usage["pages_processed"] == 1
+    assert usage["doc_size_bytes"] == 184213
+    assert usage["model"] == "mistral-ocr-4-0"
+
+
+def test_mistral_response_without_pages_raises():
+    with pytest.raises(ValueError, match="no pages"):
+        mistral_client.parse_response({"pages": [], "usage_info": {}})
+
+
+def test_mistral_cost_is_the_confirmed_per_page_rate():
+    # $4/1,000 pages on the synchronous API, publicly announced — confirmed,
+    # unlike CLOVA's console-only rate.
+    result = EngineResult(
+        engine_config_id="mistral_ocr", sample_id="x_p01", usage_raw={"pages_processed": 1}
+    )
+    apply_cost(result)
+    assert result.cost_usd == pytest.approx(0.004)
+    assert result.cost_confirmed is True
+
+
+def test_mistral_cost_scales_with_pages_processed():
+    result = EngineResult(
+        engine_config_id="mistral_ocr", sample_id="x_p01", usage_raw={"pages_processed": 5}
+    )
+    apply_cost(result)
+    assert result.cost_usd == pytest.approx(0.02)
+
+
+def test_mistral_model_is_version_pinned_not_latest():
+    # A rotating alias would change results underneath an unchanged cache.
+    assert config.ENGINE_CONFIGS["mistral_ocr"]["model"] == "mistral-ocr-4-0"
+    assert "latest" not in config.ENGINE_CONFIGS["mistral_ocr"]["model"]
+
+
+def test_mistral_extracts_table_html_under_the_confirmed_schema():
+    assert mistral_client.extract_table_htmls(MISTRAL_TABLE_RESPONSE) == [
+        UPSTAGE_TABLE_HTML
+    ]
+
+
+def test_mistral_extracts_table_html_from_the_real_jichul_p01_response():
+    # Regression fixture: the exact `tables[]` array from the first live
+    # `--tables --engine mistral` run (2026-08-11), not a reconstruction —
+    # pins the confirmed schema against the actual bytes that exposed the
+    # content/html key mismatch, rowspan/colspan and all.
+    real_table_content = (
+        '<table><tr><td colspan="3">문서번호</td><td rowspan="2">결<br/>재</td>'
+        "<td>담당</td><td>팀장</td><td>센터장</td></tr>"
+        '<tr><td colspan="3">제 호</td><td></td><td></td><td></td></tr>'
+        '<tr><td colspan="7">지출금액 일금 원정(\\)</td></tr></table>'
+    )
+    payload = {
+        "pages": [
+            {
+                "index": 0,
+                "markdown": "지 출 결 의 서\n\n[tbl-0.html](tbl-0.html)",
+                "tables": [
+                    {
+                        "id": "tbl-0.html",
+                        "content": real_table_content,
+                        "format": "html",
+                        "word_confidence_scores": None,
+                    }
+                ],
+            }
+        ],
+        "model": "mistral-ocr-4-0",
+        "usage_info": {"pages_processed": 1, "doc_size_bytes": 123456},
+    }
+    assert mistral_client.extract_table_htmls(payload) == [real_table_content]
+
+
+def test_mistral_falls_back_to_the_html_key_if_content_is_absent():
+    # If a future response reverts to (or ever used) `"html"` instead of
+    # `"content"`, that must still be read rather than silently dropped.
+    payload = {
+        "pages": [{"markdown": "x", "tables": [{"id": "tbl-0", "html": UPSTAGE_TABLE_HTML}]}],
+        "usage_info": {"pages_processed": 1},
+    }
+    assert mistral_client.extract_table_htmls(payload) == [UPSTAGE_TABLE_HTML]
+
+
+def test_mistral_falls_back_to_a_bare_string_table_entry():
+    # If `tables[]` ever holds the HTML strings directly rather than objects
+    # wrapping them, neither the `content` nor `html` key appears and the
+    # entry itself is the payload.
+    payload = {
+        "pages": [{"markdown": "x", "tables": [UPSTAGE_TABLE_HTML]}],
+        "usage_info": {"pages_processed": 1},
+    }
+    assert mistral_client.extract_table_htmls(payload) == [UPSTAGE_TABLE_HTML]
+
+
+def test_mistral_skips_a_table_object_whose_schema_is_unrecognized():
+    # An entry that matches none of the known shapes is dropped rather than
+    # raised on, so one unrecognised table cannot floor-score the page or
+    # abort the run. The untouched array survives in usage_raw for a later
+    # re-parse — this is exactly how the content/html mismatch itself was
+    # diagnosed and fixed without re-paying for the call.
+    payload = {
+        "pages": [
+            {
+                "markdown": "x",
+                "tables": [
+                    {"id": "tbl-0", "content": {"format": "html", "value": "<table></table>"}},
+                    {"id": "tbl-1", "content": UPSTAGE_TABLE_HTML},
+                    {"id": "tbl-2", "content": ""},
+                    None,
+                ],
+            }
+        ],
+        "usage_info": {"pages_processed": 1},
+    }
+    assert mistral_client.extract_table_htmls(payload) == [UPSTAGE_TABLE_HTML]
+
+
+def test_mistral_extracts_nothing_from_a_page_with_no_tables():
+    assert mistral_client.extract_table_htmls(MISTRAL_RESPONSE) == []
+    assert mistral_client.extract_table_htmls({"pages": []}) == []
+
+
+def mistral_post(monkeypatch, payload, captured):
+    class Response:
+        status_code = 200
+
+        def raise_for_status(self):
+            return None
+
+        def json(self):
+            return payload
+
+    def post(url, **kwargs):
+        captured.update(url=url, **kwargs)
+        return Response()
+
+    monkeypatch.setattr(mistral_client.requests, "post", post)
+
+
+def test_mistral_transcribe_omits_table_format_and_scores_the_markdown(monkeypatch, tmp_path):
+    captured = {}
+    mistral_post(monkeypatch, MISTRAL_RESPONSE, captured)
+    client = mistral_client.MistralClient("mistral_ocr", "key")
+
+    result = client.transcribe(make_image(tmp_path), "bimil_gyeyak_p01")
+
+    assert result.ok
+    assert result.raw_text.startswith("# 비밀유지계약서")
+    assert result.cost_usd == pytest.approx(0.004)
+    assert captured["url"] == mistral_client.API_URL
+    assert captured["headers"]["Authorization"] == "Bearer key"
+
+    body = captured["json"]
+    assert body["model"] == config.MISTRAL_MODEL
+    assert body["document"]["type"] == "image_url"
+    assert body["document"]["image_url"].startswith("data:image/jpeg;base64,")
+    # Absent, not null: the text pipeline must never receive tables separated
+    # into placeholders, which would score the output format not the OCR.
+    assert "table_format" not in body
+    assert result.table_htmls == []
+
+
+def test_mistral_transcribe_table_requests_html_and_keeps_the_raw_array(monkeypatch, tmp_path):
+    captured = {}
+    mistral_post(monkeypatch, MISTRAL_TABLE_RESPONSE, captured)
+    client = mistral_client.MistralClient("mistral_ocr", "key")
+
+    result = client.transcribe_table(make_image(tmp_path), "franchise_p47")
+
+    assert result.ok
+    assert captured["json"]["table_format"] == "html"
+    assert result.table_htmls == [UPSTAGE_TABLE_HTML]
+    # The unmodified array is persisted so a corrected parser can be re-run off
+    # the cache without re-paying — same rule as CLOVA's tables_normalized.
+    assert result.usage_raw["tables_raw"] == MISTRAL_TABLE_RESPONSE["pages"][0]["tables"]
+    assert result.cost_usd == pytest.approx(0.004)
+
+
+def test_mistral_table_call_keeps_the_placeholder_markdown_as_raw_text(monkeypatch, tmp_path):
+    # Expected, not a defect: with tables separated out the markdown carries
+    # `[tbl-N.html]` links. Only table_htmls is scored from this call.
+    mistral_post(monkeypatch, MISTRAL_TABLE_RESPONSE, {})
+    client = mistral_client.MistralClient("mistral_ocr", "key")
+    result = client.transcribe_table(make_image(tmp_path), "franchise_p47")
+    assert "[tbl-0.html](tbl-0.html)" in result.raw_text
+
+
+def test_mistral_is_table_capable_under_its_own_config_id(monkeypatch, tmp_path):
+    # Unlike Claude, Mistral needs no table-only twin config: table extraction
+    # is a parameter on the same endpoint and model, so one id serves both the
+    # 65-page text loop and the 9-page table loop.
+    assert "mistral_ocr" in config.ENGINE_CONFIGS
+    assert "mistral_ocr" in config.TABLE_CAPABLE_ENGINE_CONFIGS
+    assert "mistral_ocr" not in config.TABLE_ONLY_ENGINE_CONFIGS
+
+
 # --- HTTP failure handling for the requests-based clients ------------------
 
 
@@ -606,6 +864,7 @@ def test_claude_api_exception_is_caught_not_raised(tmp_path):
     [
         (upstage_client, lambda: upstage_client.UpstageClient("upstage_standard", "key")),
         (clova_client, lambda: clova_client.ClovaClient("clova_text", "s", "https://e/general")),
+        (mistral_client, lambda: mistral_client.MistralClient("mistral_ocr", "key")),
     ],
 )
 def test_request_failures_land_in_the_error_field(monkeypatch, tmp_path, module, make_client):

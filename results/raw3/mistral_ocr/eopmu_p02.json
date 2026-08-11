@@ -1,0 +1,21 @@
+{
+  "fingerprint": "b129ea3b67a98450cb15292b80ad041e23cb2d5960371a914b2e5789f28ada35",
+  "image_sha256": "e09dc99d651829cf1888fce1c76d1a27287345c7fd06a69663b19465f51db135",
+  "result": {
+    "engine_config_id": "mistral_ocr",
+    "sample_id": "eopmu_p02",
+    "raw_text": "A(체결기관)\n\n( 체 결 권 자 )\n\n( 서 명 )\n\nB(상대기관)\n\n( 체 결 권 자 )\n\n( 서 명 )",
+    "table_htmls": [],
+    "usage_raw": {
+      "pages_processed": 1,
+      "doc_size_bytes": 68389,
+      "model": "mistral-ocr-4-0"
+    },
+    "cost_usd": 0.004,
+    "cost_krw": 5.5200000000000005,
+    "cost_confirmed": true,
+    "latency_ms": 1203,
+    "http_status": 200,
+    "error": null
+  }
+}

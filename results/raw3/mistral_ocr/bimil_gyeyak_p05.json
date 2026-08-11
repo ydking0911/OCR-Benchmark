@@ -1,0 +1,21 @@
+{
+  "fingerprint": "6222532eb338ec6f4f91ff4393dfe55ce1d7d4009b1081019961c4894623cf0e",
+  "image_sha256": "45d99e09026fe7eaaa8d027ab833838091aa6a7a19f5497a6344d6a15d80add4",
+  "result": {
+    "engine_config_id": "mistral_ocr",
+    "sample_id": "bimil_gyeyak_p05",
+    "raw_text": "※ 본 서식은 불특정 다수의 영업비밀 보유자(기업 또는 개인)가 활용함을 상정하여 작성된 표준서식으로서\n사용자의 개별적인 사정에 따라 수정 또는 변경하여 활용하여야 함.\n※ 본 서식은 어떠한 법적 구속력도 없음.\n\n각각 서명(또는 기명날인)한 후 각자 1 부씩 보관한다.\n\n20___년 ___월 ___일\n\n\"ABC\"\n\n(명칭)_______________________\n\n(주소)_______________________\n\n(대표자)_______________________(인)\n\n\"XYZ\"\n\n(명칭)_______________________\n\n(주소)_______________________\n\n(대표자)_______________________(인)",
+    "table_htmls": [],
+    "usage_raw": {
+      "pages_processed": 1,
+      "doc_size_bytes": 127733,
+      "model": "mistral-ocr-4-0"
+    },
+    "cost_usd": 0.004,
+    "cost_krw": 5.5200000000000005,
+    "cost_confirmed": true,
+    "latency_ms": 1547,
+    "http_status": 200,
+    "error": null
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "fingerprint": "cd1e372897e6eca0ebca0aaa578176a6370a01e5e3183a422dcab279a2643030",
+  "image_sha256": "8a52a720c968943cba27e36dd140dce4c2ecfc755a46333711dd1f0ee65f0dc9",
+  "result": {
+    "engine_config_id": "mistral_ocr",
+    "sample_id": "jichul_p01",
+    "raw_text": "# 지출결의서\n\n|  문서번호 |   |   | 결 재 | 담당 | 팀장 | 센터장  |\n| --- | --- | --- | --- | --- | --- | --- |\n|  제 호 |   |   |   |  |  |   |\n|  지출금액 일금 원정(\\)  |   |   |   |   |   |   |\n|  발의일 |  | (인) | 지출예산항목  |   |   |   |\n|   |   |   |  단위사업 |   |   |   |\n|  지출일 |  |   | (인) | 예산항목 |   |   |\n|  내 역  |   |   |   |   |   |   |\n|  적요 |   |   |   |   | 금액  |   |\n|   |   |   |   |   | 원  |   |\n|  지출처 |  | 지출방 법 |  | 은행명 |   |   |\n|   |   |   |   |  예금주 |   |   |\n|   |   |   |   |  계좌번호 |   |   |\n|  영수 | 상기금액을 영수함 년 월 일 영수인 (인)  |   |   |   |   |   |",
+    "table_htmls": [],
+    "usage_raw": {
+      "pages_processed": 1,
+      "doc_size_bytes": 161221,
+      "model": "mistral-ocr-4-0"
+    },
+    "cost_usd": 0.004,
+    "cost_krw": 5.5200000000000005,
+    "cost_confirmed": true,
+    "latency_ms": 1327,
+    "http_status": 200,
+    "error": null
+  }
+}

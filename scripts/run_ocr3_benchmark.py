@@ -10,8 +10,9 @@ one page from each of the largest documents so a smoke test costs cents.
 
 `--tables` is additive and opt-in, never automatic: it makes a *second*,
 separately billed call per table page (a re-request with HTML output for
-Upstage, a table-detection call for CLOVA, a new structured-table prompt for
-Claude) on the 9 human-curated table pages only. Its responses are cached
+Upstage, a table-detection call for CLOVA, a `table_format=html` re-request for
+Mistral, a new structured-table prompt for Claude) on the 9 human-curated table
+pages only. Its responses are cached
 under `results/raw3/tables/` so they can never be confused with, or invalidate,
 the 65-page text cache. Already-measured table pages are reported from that
 cache on every run, with or without the flag.
@@ -36,6 +37,7 @@ from ocr_benchmark.engines.base import EngineResult  # noqa: E402
 from ocr_benchmark.engines.claude_client import ClaudeClient  # noqa: E402
 from ocr_benchmark.engines.claude_table_client import ClaudeTableClient  # noqa: E402
 from ocr_benchmark.engines.clova_client import ClovaClient  # noqa: E402
+from ocr_benchmark.engines.mistral_client import MistralClient  # noqa: E402
 from ocr_benchmark.engines.upstage_client import UpstageClient  # noqa: E402
 from ocr_benchmark.table_ground_truth import TABLE_GROUND_TRUTH  # noqa: E402
 
@@ -137,6 +139,12 @@ def build_client(engine_config_id: str) -> Any:
             raise SystemExit("UPSTAGE_API_KEY is not set (see .env.example)")
         return UpstageClient(engine_config_id, key)
 
+    if engine == "mistral":
+        key = os.environ.get("MISTRAL_API_KEY")
+        if not key:
+            raise SystemExit("MISTRAL_API_KEY is not set (see .env.example)")
+        return MistralClient(engine_config_id, key)
+
     if engine == "clova":
         secret = os.environ.get("NCP_CLOVA_OCR_SECRET")
         url = os.environ.get("NCP_CLOVA_OCR_INVOKE_URL")
@@ -194,11 +202,24 @@ def load_all_cached_table_results(
     return results
 
 
+def table_call(client: Any) -> Any:
+    """The method the table loop should call on `client`.
+
+    A client that exposes `transcribe_table` reaches table structure through a
+    different request against the same config id (Mistral: `table_format=html`
+    on the same endpoint and model). Engines whose table output either comes
+    from the ordinary call (Upstage, CLOVA) or from a separate config id
+    entirely (Claude) have no such method and keep using `transcribe`.
+    """
+    return getattr(client, "transcribe_table", None) or client.transcribe
+
+
 def run_engine(
     engine_config_id: str,
     entries: list[dict[str, Any]],
     cache_root: Path,
     force: bool,
+    for_tables: bool = False,
 ) -> list[EngineResult]:
     client = None
     results: list[EngineResult] = []
@@ -218,7 +239,8 @@ def run_engine(
             client = build_client(engine_config_id)
 
         log.info("[%s] %s (%d/%d) calling API", engine_config_id, sample_id, index, len(entries))
-        result = client.transcribe(Path(entry["image_path"]), sample_id)
+        call = table_call(client) if for_tables else client.transcribe
+        result = call(Path(entry["image_path"]), sample_id)
         cache3.store(cache_root, result, image_sha256)
         if not result.ok:
             log.warning("[%s] %s FAILED: %s", engine_config_id, sample_id, result.error)
@@ -229,7 +251,9 @@ def run_engine(
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--engine", default="all", help="all | upstage | clova | claude | <config_id>")
+    parser.add_argument(
+        "--engine", default="all", help="all | upstage | clova | claude | mistral | <config_id>"
+    )
     parser.add_argument(
         "--dry-run",
         action="store_true",
@@ -294,7 +318,13 @@ def main() -> int:
             len(table_pages) * len(table_engine_ids),
         )
         for engine_config_id in table_engine_ids:
-            run_engine(engine_config_id, table_pages, table_cache_root, args.force)
+            run_engine(
+                engine_config_id,
+                table_pages,
+                table_cache_root,
+                args.force,
+                for_tables=True,
+            )
 
     # Aggregate from the full cache, not just this invocation's `results`, so
     # a report built after running engines separately shows all of them.

@@ -226,6 +226,10 @@ def render(aggregated: dict[str, Any], run_note: str = "") -> str:
         f"${pricing['upstage']['standard']['usd_per_page']}/page, Enhanced "
         f"${pricing['upstage']['enhanced']['usd_per_page']}/page. "
         f"{pricing['upstage']['notes']}",
+        f"- Mistral OCR 4: {pricing['mistral']['source_url']} "
+        f"(조회 {pricing['mistral']['retrieved_at']}) — "
+        f"${pricing['mistral']['usd_per_page']}/page. "
+        f"{pricing['mistral']['notes']}",
         f"- Claude Sonnet 5: {pricing['claude']['source_url']} "
         f"(조회 {pricing['claude']['retrieved_at']}) — 입력 "
         f"${pricing['claude']['claude-sonnet-5']['input']}/MTok, 출력 "

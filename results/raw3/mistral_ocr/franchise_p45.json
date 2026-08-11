@@ -1,0 +1,21 @@
+{
+  "fingerprint": "7b93e8919d16ec15c4fe0c9e5269b19a9d9a528b848ed49ec56a24a618c666dd",
+  "image_sha256": "92455e38e1a607285c1e0e9b3fbdb613cc635296c4c336ef49dbed741ad9d621",
+  "result": {
+    "engine_config_id": "mistral_ocr",
+    "sample_id": "franchise_p45",
+    "raw_text": "별첨 [1] : 영업지역의 표시\n\n※ 영업지역을 표시한 지도를 첨부하여 주십시오\n\n본인은 본 페이지의 내용에 대한 설명을 듣고, 이를 완전히 이해하였음\n\n(인)",
+    "table_htmls": [],
+    "usage_raw": {
+      "pages_processed": 1,
+      "doc_size_bytes": 107026,
+      "model": "mistral-ocr-4-0"
+    },
+    "cost_usd": 0.004,
+    "cost_krw": 5.5200000000000005,
+    "cost_confirmed": true,
+    "latency_ms": 890,
+    "http_status": 200,
+    "error": null
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "fingerprint": "be2517497ee58cf53ec01a0488949b2702986fca3c121c4bc641bcf98db09943",
+  "image_sha256": "1d8d2d0579b4839ddc596b1bfe449de6d840e8a9dd940b0c3a48b0cfb76480f9",
+  "result": {
+    "engine_config_id": "mistral_ocr",
+    "sample_id": "franchise_p48",
+    "raw_text": "별첨 [4] : 공급 물품 등의 내역\n\n[tbl-0.html](tbl-0.html)\n\n[tbl-1.html](tbl-1.html)",
+    "table_htmls": [
+      "<table><tr><th>연번</th><th>물품명</th><th>공급가격</th></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table>",
+      "<table><tr><td>본인은 본 페이지의 내용에 대한 설명을<br/>듣고, 이를 완전히 이해하였음</td><td>(인)</td></tr></table>"
+    ],
+    "usage_raw": {
+      "pages_processed": 1,
+      "doc_size_bytes": 140148,
+      "model": "mistral-ocr-4-0",
+      "tables_raw": [
+        {
+          "id": "tbl-0.html",
+          "content": "<table><tr><th>연번</th><th>물품명</th><th>공급가격</th></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table>",
+          "format": "html",
+          "word_confidence_scores": null
+        },
+        {
+          "id": "tbl-1.html",
+          "content": "<table><tr><td>본인은 본 페이지의 내용에 대한 설명을<br/>듣고, 이를 완전히 이해하였음</td><td>(인)</td></tr></table>",
+          "format": "html",
+          "word_confidence_scores": null
+        }
+      ]
+    },
+    "cost_usd": 0.004,
+    "cost_krw": 5.5200000000000005,
+    "cost_confirmed": true,
+    "latency_ms": 750,
+    "http_status": 200,
+    "error": null
+  }
+}

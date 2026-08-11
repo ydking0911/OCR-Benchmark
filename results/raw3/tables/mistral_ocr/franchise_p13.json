@@ -1,0 +1,45 @@
+{
+  "fingerprint": "598ad6e144087b69ddaab05735e9b9bb039bf60994f998ebacbe4e532a33490e",
+  "image_sha256": "f07bd490d5a2db6c596d39703f2031e51b6183797fc0021954bea071851743d7",
+  "result": {
+    "engine_config_id": "mistral_ocr",
+    "sample_id": "franchise_p13",
+    "raw_text": "[tbl-0.html](tbl-0.html)\n\n② 가맹점사업자는 가맹점 영업이 개시되거나 계약체결일로부터 ( )일이 경과할 때까지 제 1 항의 최초가맹금 중 다음 표에 기재된 내역을 가맹본부가 지정하는 아래 금융회사에 예치하여야 한다. 다만, 가맹본부가 제 14 조의 가맹점사업자 피해보상보험 등을 체결한 경우에는 가맹본부가 직접 지급받을 수 있다.\n\n[tbl-1.html](tbl-1.html)\n\n* 예치금융회사: 은행 지점 부\n\n계좌번호: 예금주:\n\n③ 가맹본부는 다음 각 호의 어느 하나에 해당하는 경우에 위 예치기관의 장에게 예치가맹금의 지급을 요청할 수 있다.\n\n1. 가맹점사업자가 영업을 개시한 경우\n2. 가맹계약 체결일로부터 2 개월이 경과한 경우\n\n제 16 조 [가맹금의 반환]\n\n[tbl-2.html](tbl-2.html)",
+    "table_htmls": [
+      "<table><tr><td></td><td></td><td>매뉴얼 제공비,<br/>오픈지원비 등</td><td></td><td></td><td></td></tr><tr><td>최초교육비</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>합계</td><td></td><td></td><td></td><td></td><td></td></tr></table>",
+      "<table><thead><tr><th>예치가맹금 내역</th><th>금액(단위: 천원)</th></tr></thead><tr><td>가입비</td><td></td></tr><tr><td>최초교육비</td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td>합계</td><td></td></tr></table>",
+      "<table><tr><td>본인은 본 페이지의 내용에 대한 설명을 듣고, 이틀완전히 이해하였음</td><td>(인)</td></tr></table>"
+    ],
+    "usage_raw": {
+      "pages_processed": 1,
+      "doc_size_bytes": 266576,
+      "model": "mistral-ocr-4-0",
+      "tables_raw": [
+        {
+          "id": "tbl-0.html",
+          "content": "<table><tr><td></td><td></td><td>매뉴얼 제공비,<br/>오픈지원비 등</td><td></td><td></td><td></td></tr><tr><td>최초교육비</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>합계</td><td></td><td></td><td></td><td></td><td></td></tr></table>",
+          "format": "html",
+          "word_confidence_scores": null
+        },
+        {
+          "id": "tbl-1.html",
+          "content": "<table><thead><tr><th>예치가맹금 내역</th><th>금액(단위: 천원)</th></tr></thead><tr><td>가입비</td><td></td></tr><tr><td>최초교육비</td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td>합계</td><td></td></tr></table>",
+          "format": "html",
+          "word_confidence_scores": null
+        },
+        {
+          "id": "tbl-2.html",
+          "content": "<table><tr><td>본인은 본 페이지의 내용에 대한 설명을 듣고, 이틀완전히 이해하였음</td><td>(인)</td></tr></table>",
+          "format": "html",
+          "word_confidence_scores": null
+        }
+      ]
+    },
+    "cost_usd": 0.004,
+    "cost_krw": 5.5200000000000005,
+    "cost_confirmed": true,
+    "latency_ms": 1421,
+    "http_status": 200,
+    "error": null
+  }
+}
